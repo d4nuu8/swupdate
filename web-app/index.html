@@ -32,7 +32,7 @@
       <a class="navbar-brand" href="#">
         <img class="d-inline-block align-top" src="images/logo.png" alt="">
       </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarText">
@@ -48,10 +48,19 @@
   <!-- Use Bootstrap Grid Container -->
   <div class="container">
     <!-- Header -->
-    <div class="jumbotron my-3">
-      <h1 class="display-4"><span class="text-primary">SW</span>Update</h1>
-      <p class="lead">Software update for embedded systems</p>
-      <p>Upload a software image below, or restart the system at the top right corner.</p>
+    <div class="row my-3">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h1 class="display-4"><span class="text-primary">SW</span>Update</h1>
+            <p class="lead">Software update for embedded systems</p>
+            <p>Upload a software image below, or restart the system at the top right corner.</p>
+          </div>
+          <div id="collapseMessages" class="collapse" aria-labelledby="headingMessages">
+            <div class="card-body" id="messages"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="row my-3">
@@ -104,7 +113,7 @@
       <div class="col">
         <div class="card">
           <div class="card-header" id="headingMessages">
-            <a class="h5 collapsed" data-toggle="collapse" href="#collapseMessages" aria-expanded="false" aria-controls="collapseMessages">
+            <a class="h5 collapsed" data-bs-toggle="collapse" href="#collapseMessages" aria-expanded="false" aria-controls="collapseMessages">
               <i class="fas"></i> Messages
             </a>
           </div>

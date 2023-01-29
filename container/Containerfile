@@ -1,0 +1,23 @@
+# SWUpdate development container
+# Copyright (c) 2023 Daniel Braunwarth <daniel@braunwarth.dev>
+#
+# SPDX-License-Identifier: GPL-2.0-only
+
+FROM debian:testing-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install build dependencies
+COPY ./ci/setup.sh /run/setup.sh
+RUN /run/setup.sh
+
+# Install runtime tooling
+RUN apt-get update --yes && apt-get install --yes --no-install-recommends \
+        less \
+        openssh-client \
+        vim \
+        zsh \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
+    && sed -i "s/robbyrussell/gentoo/" /root/.zshrc

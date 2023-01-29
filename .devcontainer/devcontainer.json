@@ -1,0 +1,27 @@
+// SWUpdate VS Code devcontainer
+// Copyright (c) 2023 Daniel Braunwarth <daniel@braunwarth.dev>
+// SPDX-License-Identifier: GPL-2.0-only
+{
+  "build": {
+    "dockerfile": "../container/Containerfile"
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "streetsidesoftware.code-spell-checker",
+        "sumneko.lua",
+        "eamodio.gitlens",
+        "EditorConfig.EditorConfig"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      }
+    }
+  },
+
+  "forwardPorts": [
+    8080
+  ]
+}

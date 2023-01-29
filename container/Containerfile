@@ -1,0 +1,57 @@
+# SWUpdate development container
+# Copyright (c) 2023 Daniel Braunwarth <daniel@braunwarth.dev>
+#
+# SPDX-License-Identifier: GPL-2.0-only
+
+FROM debian:testing-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update --yes && apt-get install --yes --no-install-recommends \
+        # Runtime
+        ca-certificates \
+        curl \
+        gdb \
+        git \
+        htop \
+        less \
+        openssh-client \
+        tcpdump \
+        vim \
+        zsh \
+
+        # Build
+        gawk \
+        gcc \
+        gulp \
+        libarchive-dev \
+        libblkid-dev \
+        libcmocka-dev \
+        libconfig-dev \
+        libcurl4-openssl-dev \
+        libczmq-dev \
+        libebgenv-dev \
+        libext2fs-dev \
+        libfdisk-dev \
+        libgpiod-dev \
+        libjson-c-dev \
+        liblua5.2-dev \
+        libmtd-dev \
+        librsync-dev \
+        libssl-dev \
+        libsystemd-dev \
+        libubi-dev \
+        libubootenv-dev \
+        libubootenv-dev \
+        liburiparser-dev \
+        libwebsockets-dev \
+        libzck-dev \
+        libzstd-dev \
+        make \
+        npm \
+        uuid-dev \
+        zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
+    && sed -i "s/robbyrussell/gentoo/" /root/.zshrc

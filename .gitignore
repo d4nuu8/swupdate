@@ -137,3 +137,6 @@ tools/python/swupdateclient/swupdateclient.egg-info/
 
 # Python
 __pycache__
+
+# VS Code devcontainer
+!.devcontainer/

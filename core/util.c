@@ -30,7 +30,8 @@
 #include "swupdate_image.h"
 
 #if defined(__linux__)
-#include <sys/statvfs.h>
+#include <sys/vfs.h>
+#include <linux/magic.h>
 #endif
 
 #include "util.h"
@@ -1211,25 +1212,21 @@ long long get_output_size(struct img_type *img, bool strict)
 
 static bool check_free_space(int fd, long long size, char *fname)
 {
-	/* This needs OS-specific implementation because linux's statfs
-	 * f_bsize is optimal IO size vs. statvfs f_bsize fs block size,
-	 * and freeBSD is the opposite...
-	 * As everything else is the same down to field names work around
-	 * this by just defining an alias
-	 */
-#if defined(__FreeBSD__)
-#define statvfs statfs
-#define fstatvfs fstatfs
-#endif
-	struct statvfs statvfs;
+	struct statfs statfs;
 	unsigned long long free_space;
 
-	if (fstatvfs(fd, &statvfs)) {
+	if (fstatfs(fd, &statfs)) {
 		ERROR("Statfs failed on %s, skipping free space check", fname);
 		return true;
 	}
-	free_space = (unsigned long long)statvfs.f_bfree * statvfs.f_bsize;
 
+	/* statfs.f_bfree is always zero on RAMFS so we cannot really check free space here */
+	if (statfs.f_type == RAMFS_MAGIC) {
+		WARN("Cannot check free space on RAMFS. Proceeding anyways ...");
+		return true;
+	}
+
+	free_space = (unsigned long long)statfs.f_bfree * statfs.f_bsize;
 	if (free_space < size) {
 		ERROR("Not enough free space to extract %s (needed %llu, got %llu)",
 		       fname, size, free_space);

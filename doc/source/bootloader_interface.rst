@@ -85,7 +85,7 @@ registers this bootloader to SWUpdate at run-time:
         (void)register_bootloader(BOOTLOADER_TRUNK, &trunk);
     }
 
-with 
+with
 
 .. code-block:: c
 
@@ -115,7 +115,7 @@ build system.
 
 First, the bootloader support implementation, named "trunk" and implemented
 in ``bootloader/trunk.c`` for example, needs to be added to
-``bootloader/Config.in`` in the ``Bootloader Interfaces`` menu as
+``bootloader/Kconfig`` in the ``Bootloader Interfaces`` menu as
 follows:
 
 .. code-block:: kconfig
@@ -174,5 +174,3 @@ adapted as well, e.g., as follows:
     ifeq ($(CONFIG_BOOTLOADER_TUNK),y)
     LDLIBS += dl
     endif
-
-

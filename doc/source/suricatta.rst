@@ -73,7 +73,7 @@ to be realized externally in terms of restarting SWUpdate on exit.
 
 After an update has been performed, an agent listening on the progress
 interface may execute post-update actions, e.g., a reboot, on receiving
-``DONE``. 
+``DONE``.
 Additionally, a post-update command specified in the configuration file or
 given by the ``-p`` command line option can be executed.
 
@@ -139,7 +139,7 @@ The type ``server_op_res_t`` is defined in ``include/suricatta/suricatta.h``.
 It represents the valid function return codes for a server's implementation.
 
 In addition to implementing the particular channel and server, the
-``suricatta/Config.in`` file has to be adapted to include a new option
+``suricatta/Kconfig`` file has to be adapted to include a new option
 so that the new implementation becomes selectable in SWUpdate's
 configuration. In the simplest case, adding an option like the following
 one for hawkBit into the ``menu "Server"`` section is sufficient.

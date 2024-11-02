@@ -4,7 +4,6 @@
 
 menuconfig SURICATTA
 	bool "Suricatta"
-	depends on HAVE_LIBCURL
 	select CHANNEL_CURL
 	help
 	  Suricatta is a daemon mode of SWUpdate.
@@ -44,7 +43,6 @@ config SURICATTA_HAWKBIT
 
 config SURICATTA_LUA
 	bool "Suricatta Lua module"
-	depends on HAVE_LUA
 	select CHANNEL_CURL
 	select LUA
 	help
@@ -95,11 +93,5 @@ config SURICATTA_GENERAL
 	  is available. See documentation for more details.
 
 endmenu
-
-comment "Suricatta Lua module support needs Lua"
-	depends on !HAVE_LUA
-
-comment "Suricatta daemon support needs libcurl"
-	depends on !HAVE_LIBCURL
 
 endif

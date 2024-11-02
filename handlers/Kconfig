@@ -11,14 +11,10 @@ menu "Image Handlers"
 
 config ARCHIVE
 	bool "archive"
-	depends on HAVE_LIBARCHIVE
 	default n
 	help
 	  Handler using the libarchive to extract tarballs
 	  into a filesystem.
-
-comment "archive support needs libarchive"
-	depends on !HAVE_LIBARCHIVE
 
 config LOCALE
 	bool "Locale support for filenames"
@@ -70,9 +66,6 @@ config COPY
 
 config DELTA
 	bool "delta"
-	depends on HAVE_LIBCURL
-	depends on HAVE_ZSTD
-	depends on HAVE_ZCK
 	select CHANNEL_CURL
 	default n
 	help
@@ -82,13 +75,9 @@ config DELTA
 
 config DISKPART
 	bool "diskpart"
-	depends on HAVE_LIBFDISK
 	default n
 	help
 	  Handler to partition a disk, eMMC or SD
-
-comment "diskpart support needs libfdisk"
-	depends on !HAVE_LIBFDISK
 
 config DISKPART_FORMAT
 	bool "diskpart extension for creating file systems"
@@ -146,7 +135,7 @@ config EMMC_HANDLER
 	default n
 	help
 	  This handler allows to switch the boot partitions via
-	  the eMMC internal CSD register. One common use case is to 
+	  the eMMC internal CSD register. One common use case is to
 	  upgrade the bootloader, using the two hardware partitions
 	  with a dual-copy concept. This guarantees that the upgrade
 	  is power-cut safe.
@@ -160,14 +149,10 @@ config RAW
 
 config RDIFFHANDLER
 	bool "rdiff"
-	depends on HAVE_LIBRSYNC
 	default n
 	help
 	  Add support for applying librsync's rdiff patches,
 	  see http://librsync.sourcefrog.net/
-
-comment "rdiff support needs librsync"
-	depends on !HAVE_LIBRSYNC
 
 config READBACKHANDLER
 	bool "readback"
@@ -183,7 +168,6 @@ config READBACKHANDLER
 
 config REMOTE_HANDLER
 	bool "Remote handler"
-	depends on HAVE_LIBZEROMQ
 	default n
 	help
 	  Sometimes the update process should be done
@@ -192,9 +176,6 @@ config REMOTE_HANDLER
 	  an external process with SWUpdate, sending
 	  the image to be updated with the help of the
 	  zeromq library.
-
-comment "remote handler needs zeromq"
-	depends on !HAVE_LIBZEROMQ
 
 config SHELLSCRIPTHANDLER
 	bool "shellscript"
@@ -206,9 +187,6 @@ config SHELLSCRIPTHANDLER
 
 config SWUFORWARDER_HANDLER
 	bool "SWU forwarder"
-	depends on HAVE_LIBCURL
-	depends on HAVE_LIBWEBSOCKETS
-	depends on HAVE_URIPARSER
 	select CHANNEL_CURL
 	default n
 	help
@@ -217,12 +195,6 @@ config SWUFORWARDER_HANDLER
 	  The handler takes a list of URLs and forwards the
 	  embedded SWU to the other devices using the
 	  webserver REST API.
-
-comment "swuforward handler needs libcurl"
-	depends on !HAVE_LIBCURL
-
-comment "swuforward handler needs websockets and uriparser"
-	depends on !HAVE_LIBWEBSOCKETS || !HAVE_URIPARSER
 
 config SSBLSWITCH
 	bool "Second Stage Switcher"
@@ -238,15 +210,11 @@ config SSBLSWITCH
 config UBIVOL
 	bool "ubivol"
 	default n
-	depends on HAVE_LIBUBI
 	depends on MTD
 	help
 	  ubi is the default format for NAND device.
 	  Say Y if you have NAND or you use UBI on
 	  your system.
-
-comment "ubivol support needs libubi"
-	depends on !HAVE_LIBUBI
 
 config UBIATTACH
 	bool "Automatically attach UBI devices"
@@ -299,18 +267,13 @@ config UBIVIDOFFSET
 
 config UCFWHANDLER
 	bool "microcontroller firmware update"
-	depends on HAVE_LIBGPIOD
 	default n
 	help
 	  Simple protocol to upgrade a microcontroller
 	  via UART.
 
-comment "Microcontroller handler depends on libgpiod"
-	depends on !HAVE_LIBGPIOD
-
 config UNIQUEUUID
 	bool "uniqueuuid"
-	depends on HAVE_LIBBLKID
 	default n
 	help
 	  This handler checks that no filesystem on the device has
@@ -321,8 +284,5 @@ config UNIQUEUUID
 	  more filesystem have the same UUID, a wrong one is started.
 	  This handler is a partition handler and it is guaranteed that
 	  it runs before any image is installed on the device.
-
-comment "uniqueuuid support needs libblkid"
-	depends on !HAVE_LIBBLKID
 
 endmenu

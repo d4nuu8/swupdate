@@ -11,33 +11,22 @@ config FAT_FILESYSTEM
 
 config EXT_FILESYSTEM
 	bool "EXT2 / EXT3 / EXT4 file system creation support"
-	depends on HAVE_LIBEXT2FS
 	default n
 	help
 	  Enable support for creating EXT file systems.
 
-comment "EXT2 / EXT3 / EXT4 file system creation support needs libext2fs"
-	depends on !HAVE_LIBEXT2FS
-
 config BTRFS_FILESYSTEM
 	bool "BTRFS file system creation support"
-	depends on HAVE_LIBBTRFS
 	default n
 	help
 	  Enable support for creating BTRFS file systems.
 
-comment "BTRFS file system creation support needs libbtrfs libbtrfsutil"
-	depends on !HAVE_LIBBTRFS
-
 config BTRFS_FILESYSTEM_USELIBMKFS
 	bool "Use modified source from btrfs tool to be linked as lib"
-	depends on HAVE_LIBBTRFS
 	default n
+	depends on BTRFS_FILESYSTEM
 	help
 	  This requires at the moment a patched version of btrfs-tool to export
 	  mkfs.btrf as library.
-
-comment "BTRFS file system creation support needs libbtrfs libbtrfsutil"
-	depends on !HAVE_LIBBTRFS
 
 endif

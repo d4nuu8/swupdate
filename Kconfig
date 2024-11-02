@@ -9,122 +9,6 @@
 
 mainmenu "SWUpdate Configuration"
 
-config HAVE_LINUX
-	bool
-	option env="HAVE_LINUX"
-
-config HAVE_FREEBSD
-	bool
-	option env="HAVE_FREEBSD"
-
-config HAVE_LUA
-	bool
-	option env="HAVE_LUA"
-
-config HAVE_LIBCONFIG
-	bool
-	option env="HAVE_LIBCONFIG"
-
-config HAVE_LIBARCHIVE
-	bool
-	option env="HAVE_LIBARCHIVE"
-
-config HAVE_LIBCURL
-	bool
-	option env="HAVE_LIBCURL"
-
-config HAVE_LIBFDISK
-	bool
-	option env="HAVE_LIBFDISK"
-
-config HAVE_LIBBLKID
-	bool
-	option env="HAVE_LIBBLKID"
-
-config HAVE_LIBGPIOD
-	bool
-	option env="HAVE_LIBGPIOD"
-
-config HAVE_LIBMTD
-	bool
-	option env="HAVE_LIBMTD"
-
-config HAVE_LIBUBI
-	bool
-	option env="HAVE_LIBUBI"
-
-config HAVE_LIBUBOOTENV
-	bool
-	option env="HAVE_LIBUBOOTENV"
-
-config HAVE_LIBEBGENV
-       bool
-       option env="HAVE_LIBEBGENV"
-
-config HAVE_LIBTEGRABOOT_TOOLS
-       bool
-       option env="HAVE_LIBTEGRABOOT_TOOLS"
-
-config HAVE_LIBEXT2FS
-	bool
-	option env="HAVE_LIBEXT2FS"
-
-config HAVE_LIBBTRFS
-	bool
-	option env="HAVE_LIBBTRFS"
-
-config HAVE_LIBZEROMQ
-	bool
-	option env="HAVE_LIBZEROMQ"
-
-config HAVE_ZLIB
-	bool
-	option env="HAVE_ZLIB"
-
-config HAVE_ZSTD
-	bool
-	option env="HAVE_ZSTD"
-
-config HAVE_LIBSSL
-	bool
-	option env="HAVE_LIBSSL"
-
-config HAVE_LIBSYSTEMD
-	bool
-	option env="HAVE_LIBSYSTEMD"
-
-config HAVE_LIBCRYPTO
-	bool
-	option env="HAVE_LIBCRYPTO"
-
-config HAVE_WOLFSSL
-	bool
-	option env="HAVE_WOLFSSL"
-
-config HAVE_MBEDTLS
-	bool
-	option env="HAVE_MBEDTLS"
-
-config HAVE_P11KIT
-	bool
-	option env="HAVE_P11KIT"
-
-config HAVE_LIBWEBSOCKETS
-	bool
-	option env="HAVE_LIBWEBSOCKETS"
-
-config HAVE_LIBRSYNC
-	bool
-	option env="HAVE_LIBRSYNC"
-
-config HAVE_URIPARSER
-	bool
-	option env="HAVE_URIPARSER"
-
-config HAVE_ZCK
-	bool
-	option env="HAVE_ZCK"
-
 menu "SWUpdate Settings"
 
 menu "General Configuration"
@@ -143,15 +27,10 @@ config DISKFORMAT
 
 config SYSTEMD
 	bool "enable systemd support"
-	depends on HAVE_LINUX
-	depends on HAVE_LIBSYSTEMD
 	default n
 	help
 	  Enable support for systemd's start-up completion
 	  notification and socket-based activation features.
-
-comment "systemd support needs libsystemd"
-	depends on !HAVE_LIBSYSTEMD && HAVE_LINUX
 
 config DEFAULT_CONFIG_FILE
 	string "File with default settings"
@@ -228,23 +107,14 @@ endmenu
 config MTD
 	bool "MTD support"
 	default y
-	depends on HAVE_LINUX
-	depends on HAVE_LIBMTD
 	help
 	  Enable MTD support.
-
-comment "MTD support needs libmtd"
-	depends on !HAVE_LIBMTD && HAVE_LINUX
 
 config LUA
 	bool "lua"
 	default y
-	depends on HAVE_LUA
 	help
 	  Enable Lua interpreter.
-
-comment "Lua support needs a Lua interpreter"
-	depends on !HAVE_LUA
 
 config LUAPKG
 	string "Lua pkg-config name"
@@ -367,15 +237,11 @@ comment "Interfaces"
 config DOWNLOAD
 	bool "Enable image downloading"
 	default n
-	depends on HAVE_LIBCURL
 	select CHANNEL_CURL
 	select JSON
 	help
 	  Enable update from image URL using libcurl. The stream is sent via IPC
 	  to the installer as it is done for other interfaces.
-
-comment "Image downloading support needs libcurl"
-	depends on !HAVE_LIBCURL
 
 config DOWNLOAD_SSL
 	bool "Enable SSL support for image downloading"
@@ -387,7 +253,6 @@ config DOWNLOAD_SSL
 
 config CHANNEL_CURL
 	bool
-	depends on HAVE_LIBCURL
 	select CURL
 
 source "suricatta/Kconfig"
@@ -407,17 +272,14 @@ choice
 
 	config SSL_IMPL_OPENSSL
 		bool "OpenSSL"
-		depends on HAVE_LIBSSL
 
 	config SSL_IMPL_WOLFSSL
 		bool "wolfSSL (with OpenSSL compatibility layer)"
-		depends on HAVE_WOLFSSL
 		select CMS_IGNORE_CERTIFICATE_PURPOSE if SIGALG_CMS
 		select CMS_SKIP_UNKNOWN_SIGNERS if SIGALG_CMS
 
 	config SSL_IMPL_MBEDTLS
 		bool "mbedTLS"
-		depends on HAVE_MBEDTLS
 endchoice
 
 
@@ -516,7 +378,7 @@ config ENCRYPTED_IMAGES_HARDEN_LOGGING
 config PKCS11
 	bool "Enable PKCS#11 cryptographic operations"
 	default n
-	depends on HAVE_WOLFSSL && HAVE_P11KIT && ENCRYPTED_IMAGES
+	depends on ENCRYPTED_IMAGES
 	help
 	  Enable using PKCS#11 for AES decryption instead of having the plain
 	  key available in a file. This is implemented with wolfSSL independent
@@ -526,12 +388,10 @@ comment "Compressors (zlib always on)"
 
 config GUNZIP
 	bool
-	depends on HAVE_ZLIB
 	default y
 
 config ZSTD
 	bool "Zstd compression support"
-	depends on HAVE_ZSTD
 
 comment "Parsers"
 source "parser/Kconfig"

@@ -103,3 +103,6 @@ subdir('core')
 
 # Tools
 subdir('tools')
+
+# Tests
+subdir('test')

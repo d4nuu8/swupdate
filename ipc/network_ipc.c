@@ -61,7 +61,7 @@ static int prepare_ipc(void) {
 	return connfd;
 }
 
-int ipc_postupdate(ipc_message *msg) {
+int ipc_reboot(ipc_message *msg) {
 	int connfd = prepare_ipc();
 	if (connfd < 0)
 		return -1;
@@ -84,7 +84,7 @@ int ipc_postupdate(ipc_message *msg) {
 		msg->data.procmsg.len = strnlen(tmpbuf, sizeof(msg->data.procmsg.buf) - 1);
 	}
 	msg->magic = IPC_MAGIC;
-	msg->type = POST_UPDATE;
+	msg->type = REBOOT;
 
 	int result = write(connfd, msg, sizeof(*msg)) != sizeof(*msg) ||
 		read(connfd, msg, sizeof(*msg)) != sizeof(*msg);

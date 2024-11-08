@@ -429,14 +429,13 @@ void *network_thread (void *data)
 		pthread_mutex_lock(&stream_mutex);
 		if (msg.magic == IPC_MAGIC)  {
 			switch (msg.type) {
-			case POST_UPDATE:
-				if (postupdate(get_swupdate_cfg(),
+			case REBOOT:
+				if (rebootcmd(get_swupdate_cfg(),
 							   msg.data.procmsg.len > 0 ? msg.data.procmsg.buf : NULL) == 0) {
 					msg.type = ACK;
-					sprintf(msg.data.msg, "Post-update actions successfully executed.");
 				} else {
 					msg.type = NACK;
-					sprintf(msg.data.msg, "Post-update actions failed.");
+					sprintf(msg.data.msg, "Reboot failed.");
 				}
 				break;
 			case SWUPDATE_SUBPROCESS:

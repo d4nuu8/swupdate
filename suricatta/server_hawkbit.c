@@ -1521,10 +1521,10 @@ cleanup:
 		ERROR("JSON object should be freed but was not.");
 	}
 	if (result == SERVER_OK) {
-		INFO("Update successful, executing post-update actions.");
+		INFO("Update successful, rebooting the system.");
 		ipc_message msg;
 		memset(&msg, 0, sizeof(msg));
-		if (ipc_postupdate(&msg) != 0) {
+		if (ipc_reboot(&msg) != 0) {
 			result = SERVER_EERR;
 		} else {
 			result = msg.type == ACK ? SERVER_OK : SERVER_EERR;

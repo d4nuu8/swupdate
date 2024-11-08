@@ -215,7 +215,6 @@ static bool get_common_fields(parsertype p, void *cfg, struct swupdate_cfg *swcf
 	/*
 	 * As default, reboot is initiated
 	 */
-	swcfg->reboot_required = true;
 	if((setting = find_node(p, cfg, "reboot", swcfg)) != NULL) {
 		GET_FIELD_BOOL(p, setting, NULL, &swcfg->reboot_required);
 	}

@@ -29,7 +29,7 @@ typedef enum {
 	ACK,
 	NACK,
 	GET_STATUS,
-	POST_UPDATE,
+	REBOOT,
 	SWUPDATE_SUBPROCESS,
 	SET_AES_KEY,
 	SET_UPDATE_STATE,	/* set bootloader ustate */
@@ -143,7 +143,7 @@ int ipc_get_status(ipc_message *msg);
 int ipc_get_status_timeout(ipc_message *msg, unsigned int timeout_ms);
 int ipc_notify_connect(void);
 int ipc_notify_receive(int *connfd, ipc_message *msg);
-int ipc_postupdate(ipc_message *msg);
+int ipc_reboot(ipc_message *msg);
 int ipc_send_cmd(ipc_message *msg);
 
 typedef int (*writedata)(char **buf, int *size);

@@ -521,7 +521,7 @@ Command line parameters
 +-------------+----------+--------------------------------------------+
 | -P <cmd>    | string   | Execute pre-update command.                |
 +-------------+----------+--------------------------------------------+
-| -p <cmd>    | string   | Execute post-update command.               |
+| -r <cmd>    | string   | Execute reboot command.                    |
 +-------------+----------+--------------------------------------------+
 | -q <sel>    | string   | List for software images set and source    |
 |             |          |             that are accepted via IPC      |

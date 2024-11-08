@@ -45,7 +45,6 @@ static void usage(void) {
 		" -s <path>            : path to swupdate IPC socket\n"
 		" -q : go quiet, resets verbosity\n"
 		" -v : go verbose, essentially print upgrade status messages from server\n"
-		" -p : ask the server to run post-update commands if upgrade succeeds\n"
 		);
 }
 
@@ -53,7 +52,6 @@ char buf[256];
 int fd = STDIN_FILENO;
 int verbose = 1;
 bool dry_run = false;
-bool run_postupdate = false;
 int end_status = EXIT_SUCCESS;
 char *software_set = NULL, *running_mode = NULL;
 char *socketpath = NULL;
@@ -96,23 +94,21 @@ static int printstatus(ipc_message *msg)
 
 /*
  * this is called at the end reporting the status
- * of the upgrade and running any post-update actions
- * if successful
+ * of the upgrade and performing a reboot on success if needed
  */
 static int end(RECOVERY_STATUS status)
 {
 	end_status = (status == SUCCESS) ? EXIT_SUCCESS : EXIT_FAILURE;
 
-	fprintf(stdout, "SWUpdate %s\n",
-		status == FAILURE ? "*failed* !" :
-			"was successful !");
+	if (status == FAILURE)
+		ERROR("SWUpdate *failed* !");
+	else
+		INFO("SWUpdate was successful !");
 
-	if (status == SUCCESS && run_postupdate) {
-		fprintf(stdout, "Executing post-update actions.\n");
+	if (status == SUCCESS) {
 		ipc_message msg;
 		msg.data.procmsg.len = 0;
-		if (ipc_postupdate(&msg) != 0 || msg.type != ACK) {
-			fprintf(stderr, "Running post-update failed!\n");
+		if (ipc_reboot(&msg) != 0 || msg.type != ACK) {
 			end_status = EXIT_FAILURE;
 		}
 	}
@@ -210,9 +206,6 @@ int main(int argc, char *argv[]) {
 			software_set = optarg;
 			running_mode = pos;
 			break;
-		case 'p':
-			run_postupdate = true;
-			break;
 		case 's':
 			socketpath = strdup(optarg);
 			if(!socketpath) {
@@ -240,4 +233,3 @@ int main(int argc, char *argv[]) {
 
 	cleanup_and_exit(EXIT_SUCCESS);
 }
-

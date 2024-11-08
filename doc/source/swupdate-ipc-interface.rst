@@ -53,7 +53,7 @@ Where the fields have the meaning:
 
 - magic : a magic number as simple proof of the packet
 - type : one of REQ_INSTALL, ACK, NACK,
-  GET_STATUS, POST_UPDATE, SWUPDATE_SUBPROCESS, SET_AES_KEY
+  GET_STATUS, REBOOT, SWUPDATE_SUBPROCESS, SET_AES_KEY
 - msgdata : a buffer used by the client to send the image
   or by SWUpdate to report back notifications and status.
 
@@ -314,7 +314,7 @@ Restart API
 
         POST /restart
 
-If configured (see post update command), this request will restart the device.
+If configured (see reboot command), this request will restart the device.
 
 
 WebSocket API

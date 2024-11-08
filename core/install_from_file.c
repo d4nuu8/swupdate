@@ -44,8 +44,7 @@ static int readimage(char **p, int *size) {
 
 /*
  * this is called at the end reporting the status
- * of the upgrade and running any post-update actions
- * if successful
+ * of the upgrade and performing a reboot on success if needed
  */
 static int endupdate(RECOVERY_STATUS status)
 {
@@ -59,7 +58,7 @@ static int endupdate(RECOVERY_STATUS status)
 	if (status == SUCCESS) {
 		ipc_message msg;
 		msg.data.procmsg.len = 0;
-		if (ipc_postupdate(&msg) != 0 || msg.type != ACK) {
+		if (ipc_reboot(&msg) != 0 || msg.type != ACK) {
 			end_status = EXIT_FAILURE;
 		}
 	}

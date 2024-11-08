@@ -27,5 +27,3 @@ DESCRIPTION
        go quiet, resets verbosity
 -v
        go verbose, essentially print upgrade status messages from server
--p
-       ask the server to run post-update commands if upgrade succeeds

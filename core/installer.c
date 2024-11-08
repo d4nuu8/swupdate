@@ -595,19 +595,28 @@ int preupdatecmd(struct swupdate_cfg *swcfg)
 	return 0;
 }
 
-int postupdate(struct swupdate_cfg *swcfg, const char *info)
+int rebootcmd(struct swupdate_cfg *swcfg, const char *info)
 {
+	int ret = 0;
+
 	swupdate_progress_done(info);
 
-	if (swcfg) {
-		if (swcfg->parms.dry_run) {
-			DEBUG("Dry run, skipping Post-update command");
-		} else {
-			DEBUG("Running Post-update command");
-			return run_system_cmd(swcfg->postupdatecmd);
-		}
+	if (!swcfg)
+		goto finish;
 
+	if (swcfg->parms.dry_run) {
+		DEBUG("Dry run, skipping reboot");
+		goto finish;
 	}
 
-	return 0;
+	if (!swcfg->reboot_required) {
+		INFO("No reboot required for this update");
+		goto finish;
+	}
+
+	DEBUG("Rebooting the system");
+	ret = run_system_cmd(swcfg->rebootcmd);
+
+finish:
+	return ret;
 }

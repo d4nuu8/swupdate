@@ -69,7 +69,6 @@ struct parent_connection_info {
 	unsigned long conn_id;
 };
 
-static bool run_postupdate;
 static unsigned int watchdog_conn = 0;
 static struct mg_http_serve_opts s_http_server_opts;
 const char *global_auth_domain;
@@ -352,7 +351,7 @@ static void restart_handler(struct mg_connection *nc, void *ev_data)
 		return;
 	}
 
-	int ret = ipc_postupdate(&msg);
+	int ret = ipc_reboot(&msg);
 	if (ret || msg.type != ACK) {
 		mg_http_reply(nc, 500, "", "%s", "Failed to queue command\n");
 		return;
@@ -490,10 +489,10 @@ static void *broadcast_progress_thread(void *data)
 			broadcast(p, str);
 		}
 
-		if (msg.status == SUCCESS && msg.source == SOURCE_WEBSERVER && run_postupdate) {
+		if (msg.status == SUCCESS && msg.source == SOURCE_WEBSERVER) {
 			ipc_message ipc = {};
 
-			ipc_postupdate(&ipc);
+			ipc_reboot(&ipc);
 		}
 
 		if (msg.infolen) {
@@ -796,7 +795,6 @@ static int mongoose_settings(void *elem, void  __attribute__ ((__unused__)) *dat
 	if (strlen(tmp)) {
 		opts->auth_domain = strdup(tmp);
 	}
-	GET_FIELD_BOOL(LIBCFG_PARSER, elem, "run-postupdate", &run_postupdate);
 
 	GET_FIELD_INT(LIBCFG_PARSER, elem, "timeout", (int *)&watchdog_conn);
 
@@ -854,11 +852,6 @@ int start_mongoose(const char *cfgfname, int argc, char *argv[])
 
 	/* No listing directory as default */
 	opts.listing = false;
-
-	/*
-	 * Default value is active
-	 */
-	run_postupdate = true;
 
 	/*
 	 * Default no monitor of connection

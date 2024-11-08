@@ -114,7 +114,7 @@ static struct option long_options[] = {
 	{"output", required_argument, NULL, 'o'},
 	{"gen-swversions", required_argument, NULL, 's'},
 	{"preupdate", required_argument, NULL, 'P'},
-	{"postupdate", required_argument, NULL, 'p'},
+	{"rebootcmd", required_argument, NULL, 'r'},
 	{"select", required_argument, NULL, 'e'},
 #ifdef CONFIG_SURICATTA
 	{"suricatta", required_argument, NULL, 'u'},
@@ -140,7 +140,7 @@ static void usage(char *programname)
 		" -b, --blacklist <list of mtd>  : MTDs that must not be scanned for UBI\n"
 #endif
 		" -B, --bootloader               : bootloader interface (default: " PREPROCVALUE(BOOTLOADER_DEFAULT) ")\n"
-		" -p, --postupdate               : execute post-update command\n"
+		" -r, --reboot <command>         : execute reboot command\n"
 		" -P, --preupdate                : execute pre-update command\n"
 		" -e, --select <software>,<mode> : Select software images set and source\n"
 		"                                  Ex.: stable,main\n"
@@ -274,6 +274,7 @@ static void swupdate_init(struct swupdate_cfg *sw)
 	LIST_INIT(&sw->bootloader);
 	LIST_INIT(&sw->extprocs);
 	sw->cert_purpose = SSL_PURPOSE_DEFAULT;
+	sw->reboot_required = true;
 
 #ifdef CONFIG_MTD
 	mtd_init();
@@ -319,7 +320,7 @@ static int read_globals_settings(void *elem, void *data)
 	GET_FIELD_STRING(LIBCFG_PARSER, elem,
 				"mtd-blacklist", sw->mtdblacklist);
 	GET_FIELD_STRING(LIBCFG_PARSER, elem,
-				"postupdatecmd", sw->postupdatecmd);
+				"rebootcmd", sw->rebootcmd);
 	GET_FIELD_STRING(LIBCFG_PARSER, elem,
 				"preupdatecmd", sw->preupdatecmd);
 	GET_FIELD_STRING(LIBCFG_PARSER, elem,
@@ -761,9 +762,9 @@ int main(int argc, char **argv)
 		case 'c':
 			opt_c = true;
 			break;
-		case 'p':
-			strlcpy(swcfg.postupdatecmd, optarg,
-				sizeof(swcfg.postupdatecmd));
+		case 'r':
+			strlcpy(swcfg.rebootcmd, optarg,
+				sizeof(swcfg.rebootcmd));
 			break;
 		case 'P':
 			strlcpy(swcfg.preupdatecmd, optarg,

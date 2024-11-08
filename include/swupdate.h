@@ -52,7 +52,7 @@ struct swupdate_cfg {
 	char output_swversions[SWUPDATE_GENERAL_STRING_SIZE];
 	char publickeyfname[SWUPDATE_GENERAL_STRING_SIZE];
 	char aeskeyfname[SWUPDATE_GENERAL_STRING_SIZE];
-	char postupdatecmd[SWUPDATE_GENERAL_STRING_SIZE];
+	char rebootcmd[SWUPDATE_GENERAL_STRING_SIZE];
 	char preupdatecmd[SWUPDATE_GENERAL_STRING_SIZE];
 	char minimum_version[SWUPDATE_GENERAL_STRING_SIZE];
 	char maximum_version[SWUPDATE_GENERAL_STRING_SIZE];

@@ -57,7 +57,7 @@ method, returning ``true``, or, in case of errors, ``nil`` plus an error message
 
 Finally, the ``close()`` method closes the connection to SWUpdate's control
 socket after which it waits for SWUpdate to complete the update transaction and
-executes the post-install command, if given.
+executes the reboot command, if given.
 
 The following example snippet illustrates how to use the control interface binding:
 

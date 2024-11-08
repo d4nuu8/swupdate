@@ -18,7 +18,6 @@
 #include <sys/stat.h>
 #include <sys/un.h>
 #include <sys/select.h>
-#include <sys/reboot.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <pthread.h>
@@ -62,7 +61,6 @@ static void textcolor(int attr, int fg, int bg)
 static struct option long_options[] = {
 	{"help", no_argument, NULL, 'h'},
 	{"psplash", no_argument, NULL, 'p'},
-	{"reboot", no_argument, NULL, 'r'},
 	{"wait", no_argument, NULL, 'w'},
 	{"color", no_argument, NULL, 'c'},
 	{"socket", required_argument, NULL, 's'},
@@ -79,7 +77,6 @@ static void usage(char *programname)
 	fprintf(stdout,
 		" -c, --color             : Use colors to show results\n"
 		" -e, --exec <script>     : call the script with the result of update\n"
-		" -r, --reboot            : reboot after a successful update\n"
 		" -w, --wait              : wait for a connection with SWUpdate\n"
 		" -p, --psplash           : send info to the psplash process\n"
 		" -s, --socket <path>     : path to progress IPC socket\n"
@@ -189,15 +186,6 @@ static void fill_progress_bar(char *bar, size_t size, unsigned int percent)
 	memset(&bar[filled_len], '-', remain);
 }
 
-static void reboot_device(void)
-{
-	sleep(5);
-	sync();
-	if (reboot(RB_AUTOBOOT) < 0) { /* Should never happen. */
-		fprintf(stdout, "Please reset the board.\n");
-	}
-}
-
 static void run_post_script(char *script, struct progress_msg *msg)
 {
 	char *cmd;
@@ -227,12 +215,10 @@ int main(int argc, char **argv)
 	char bar[bar_len+1];
 	int opt_c = 0;
 	int opt_w = 0;
-	int opt_r = 0;
 	int opt_p = 0;
 	int c;
 	char *script = NULL;
 	bool wait_update = true;
-	bool disable_reboot = false;
 	bool redirected = false;
 
 	/* Process options with getopt */
@@ -247,9 +233,6 @@ int main(int argc, char **argv)
 			break;
 		case 'p':
 			opt_p = 1;
-			break;
-		case 'r':
-			opt_r = 1;
 			break;
 		case 's':
 			SOCKET_PROGRESS_PATH = strdup(optarg);
@@ -339,30 +322,11 @@ int main(int argc, char **argv)
 		 * Be sure that string in message are Null terminated
 		 */
 		if (msg.infolen > 0) {
-			char reboot_mode[20] = { 0 };
-			int n, cause;
-
 			if (msg.infolen >= sizeof(msg.info) - 1) {
 				msg.infolen = sizeof(msg.info) - 1;
 			}
 			msg.info[msg.infolen] = '\0';
 			fprintf(stdout, "INFO : %s\n", msg.info);
-
-			/*
-			 * Check for no-reboot mode
-			 * Just do a simple parsing for now. If more messages
-			 * will be added, JSON lib should be linked.
-			 * NOTE: Until then, the exact string format is imperative!
-			 */
-			n = sscanf(msg.info, "{\"%d\": { \"reboot-mode\" : \"%19[-a-z]\"}}",
-				   &cause, reboot_mode);
-			if (n == 2) {
-				if (cause == CAUSE_REBOOT_MODE) {
-					if (!strcmp(reboot_mode, "no-reboot")) {
-						disable_reboot = true;
-					}
-				}
-			}
 		}
 		msg.cur_image[sizeof(msg.cur_image) - 1] = '\0';
 
@@ -422,22 +386,7 @@ int main(int argc, char **argv)
 				psplash_progress(psplash_pipe_path, &msg);
 				psplash_ok = 0;
 			}
-			if (psplash_ok && disable_reboot) {
-				fprintf(stdout,
-					"\nReboot disabled or waiting for activation.\n");
-				char *buf = alloca(PSPLASH_MSG_SIZE);
-				snprintf(buf, PSPLASH_MSG_SIZE - 1,
-					 "MSG Reboot disabled or waiting for activation.");
-				psplash_write_fifo(psplash_pipe_path, buf);
-			}
 
-			if ((msg.status == SUCCESS) && (msg.cur_step > 0) && opt_r && !disable_reboot) {
-				reboot_device();
-			}
-			/*
-			 * Reset per update variables after update.
-			 */
-			disable_reboot = false;
 			wait_update = true;
 			break;
 		case DONE:
@@ -456,10 +405,6 @@ int main(int argc, char **argv)
 					msg.status = SUCCESS;
 					psplash_progress(psplash_pipe_path, &msg);
 					psplash_ok = 0;
-				}
-				if (opt_r && strcasestr(msg.info, "firmware")) {
-					reboot_device();
-					break;
 				}
 				fprintf(stdout, "\nDon't know how to activate this update, doing nothing.\n");
 			}

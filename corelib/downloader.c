@@ -82,7 +82,7 @@ static RECOVERY_STATUS download_from_url(channel_data_t* channel_data)
 	if (result != FAILURE) {
 		ipc_message msg;
 		msg.data.procmsg.len = 0;
-		if (ipc_postupdate(&msg) != 0 || msg.type != ACK) {
+		if (ipc_reboot(&msg) != 0 || msg.type != ACK) {
 			result = FAILURE;
 		}
 	}

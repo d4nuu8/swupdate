@@ -26,8 +26,6 @@ after an update.
         Command to be execute after an update
 -p
         send percentage to psplash
--r
-        optionally reboot the target after a successful update
 -s
         path to progress IPC socket in case the default is not taken
 -w
@@ -36,4 +34,3 @@ after an update.
         don't print progress bar
 -h
         print a help
-        

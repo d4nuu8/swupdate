@@ -45,9 +45,9 @@ int __wrap_ipc_wait_for_complete(getstatus callback)
 	return mock_type(RECOVERY_STATUS);
 }
 
-extern int __real_ipc_postupdate(ipc_message *msg);
-int __wrap_ipc_postupdate(ipc_message *msg);
-int __wrap_ipc_postupdate(ipc_message *msg) {
+extern int __real_ipc_rebootcmd(ipc_message *msg);
+int __wrap_ipc_rebootcmd(ipc_message *msg);
+int __wrap_ipc_rebootcmd(ipc_message *msg) {
 	msg->type = ACK;
 	return 0;
 }

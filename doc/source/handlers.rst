@@ -1294,13 +1294,17 @@ during an update.
 		properties: {
 			command = < one of create" or "delete" >
 			path = <path for the subvolume>;
-                        mount = "true" or missing;
+			mount = "true" or missing;
+			create-destination = "true" or missing;
 		}
 	})
 
 
 If `mount` is set, SWUpdate will mount the device and the path is appenden to the
 mountpoint used with mount. If device is already mounted, path is the absolute path.
+
+If `create-destination` is set, SWUpdate will create the destination path of the subvolume before
+creating it.
 
 Delta Update Handler
 --------------------

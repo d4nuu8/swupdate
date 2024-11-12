@@ -6,6 +6,7 @@
  */
 
 #include <errno.h>
+#include <libgen.h>
 #include <stdio.h>
 #include <util.h>
 #include <unistd.h>
@@ -65,6 +66,17 @@ static int btrfs(struct img_type *img,
 	DEBUG("%s subvolume %s...", (op == BTRFS_CREATE_SUBVOLUME) ? "Creating" : "Deleting", subvol_path);
 	switch (op) {
 	case BTRFS_CREATE_SUBVOLUME:
+		if (strtobool(dict_get_value(&img->properties, "create-destination"))) {
+			char *parent = dirname(strdupa(globalpath));
+			DEBUG("Creating subvolume destination directory: %s", parent);
+			ret = mkpath(parent, 0755);
+			if (ret < 0) {
+				ERROR("Failed to create subvolume destination directory %s: %s",
+					parent, strerror(errno));
+				ret = -1;
+				goto cleanup;
+			}
+		}
 		btrfs_error = btrfs_util_create_subvolume(globalpath, 0, NULL, NULL);
 		break;
 	case BTRFS_DELETE_SUBVOLUME:
@@ -81,6 +93,7 @@ static int btrfs(struct img_type *img,
 		ret = -1;
 	}
 
+cleanup:
 	if (tomount) {
 		/*
 		 * btrfs needs some time after creating a subvolume,

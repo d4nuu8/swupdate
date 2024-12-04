@@ -7,7 +7,10 @@
 
 #pragma once
 
-#define BANNER "SWUpdate v" SWU_VER "\n"
+#define STR_HELPER(x) #x
+#define STR(x) STR_HELPER(x)
+
+#define BANNER "SWUpdate v" STR(VERSION) "." STR(VERSION_PATCHLEVEL) "." STR(VERSION_SUBLEVEL) "\n"
 
 #define SWUPDATE_GENERAL_STRING_SIZE	256
 #define SWUPDATE_UPDATE_DESCRIPTION_STRING_SIZE	512

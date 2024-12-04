@@ -5,9 +5,6 @@
 # ==========================================================================
 # Build system
 # ==========================================================================
-SWU_DIR = $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-SWU_VER = $(shell git -C $(SWU_DIR) describe --tags --always --dirty)
-export SWU_VER
 SKIP_STRIP ?= n
 
 ifneq ($(CC),clang)
@@ -19,8 +16,11 @@ endif
 # -std=gnu99 needed for [U]LLONG_MAX on some systems
 KBUILD_CPPFLAGS += $(call cc-option,-std=gnu99,)
 
-KBUILD_CPPFLAGS += -D_GNU_SOURCE -DNDEBUG \
-		   -D"SWU_VER=\"$(SWU_VER)\""
+KBUILD_CPPFLAGS += -D_GNU_SOURCE -DNDEBUG
+
+KBUILD_CPPFLAGS += -DVERSION=$(VERSION)
+KBUILD_CPPFLAGS += -DVERSION_PATCHLEVEL=$(PATCHLEVEL)
+KBUILD_CPPFLAGS += -DVERSION_SUBLEVEL=$(SUBLEVEL)
 
 KBUILD_CFLAGS += $(call cc-option,-Wall,)
 KBUILD_CFLAGS += $(call cc-option,-Wshadow,)

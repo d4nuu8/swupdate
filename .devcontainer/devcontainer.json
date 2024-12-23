@@ -14,7 +14,8 @@
         "streetsidesoftware.code-spell-checker",
         "sumneko.lua",
         "eamodio.gitlens",
-        "EditorConfig.EditorConfig"
+        "EditorConfig.EditorConfig",
+        "mesonbuild.mesonbuild"
       ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "zsh"

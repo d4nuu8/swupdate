@@ -48,6 +48,7 @@ RUN apt-get update --yes && apt-get install --yes --no-install-recommends \
         libzck-dev \
         libzstd-dev \
         make \
+        meson \
         npm \
         uuid-dev \
         zlib1g-dev \

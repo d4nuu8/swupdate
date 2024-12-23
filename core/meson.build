@@ -19,7 +19,6 @@ sources = [
     'parser.c',
     'parsing_library.c',
     'stream_interface.c',
-    'swupdate.c',
     'swupdate_vars.c',
     'util.c',
 ]
@@ -48,12 +47,21 @@ if kconfig.has_key('CONFIG_LUA')
     dependencies += lua_dependency
 endif
 
-executable(
+swupdatelib = static_library(
     'swupdate',
     sources,
     include_directories: include_dirs,
     dependencies: dependencies,
     link_with: core_libs,
     link_args: link_args,
+    implicit_include_directories: false,
+)
+
+executable(
+    'swupdate',
+    'swupdate.c',
+    include_directories: include_dirs,
+    dependencies: dependencies,
+    link_with: swupdatelib,
     install: true,
 )

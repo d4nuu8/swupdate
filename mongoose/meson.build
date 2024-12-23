@@ -27,10 +27,7 @@ if kconfig.has_key('CONFIG_WEBSERVER') and kconfig.has_key('CONFIG_MONGOOSE')
         if kconfig.has_key('CONFIG_SSL_IMPL_WOLFSSL')
             dependencies += dependency('wolfssl', required: true)
 
-            c_args += [
-                '-DMG_TLS=5',
-                '-DOPENSSL_ALL',
-            ]
+            c_args += ['-DMG_TLS=5', '-DOPENSSL_ALL']
         endif
 
         if kconfig.has_key('CONFIG_SSL_IMPL_MBEDTLS')

@@ -8,8 +8,9 @@ if kconfig.has_key('CONFIG_LUA')
         link_with: ipc_lib,
         implicit_include_directories: false,
         install: true,
-        install_dir: get_option('libdir') / 'lua'
-        + lua_dependency.get_variable('major_version'),
+        install_dir: get_option('libdir') / 'lua' + lua_dependency.get_variable(
+            'major_version',
+        ),
         version: '0.1',
     )
 endif

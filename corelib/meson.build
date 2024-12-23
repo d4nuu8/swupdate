@@ -27,7 +27,9 @@ if kconfig.has_key('CONFIG_LUA')
 
     dependencies += lua_dependency
 
-    embedded_lua_source = kconfig.get('CONFIG_EMBEDDED_LUA_HANDLER_SOURCE', '').strip('""')
+    embedded_lua_source = kconfig.get('CONFIG_EMBEDDED_LUA_HANDLER_SOURCE', '').strip(
+        '""',
+    )
     if embedded_lua_source != ''
         link_args += [
             '-Wl,--format=binary',
@@ -36,11 +38,17 @@ if kconfig.has_key('CONFIG_LUA')
             '-Wl,--format=default',
         ]
 
-        embededde_lua_source = embedded_lua_source.replace('"', '').replace('.', '_').replace('/', '_')
+        embededde_lua_source = embedded_lua_source.replace('"', '').replace(
+            '.',
+            '_',
+        ).replace(
+            '/',
+            '_',
+        )
 
         c_args += [
             '-DEMBEDDED_LUA_SRC_START=_binary_' + embededde_lua_source + '_start',
-            '-DEMBEDDED_LUA_SRC_END=_binary_' + embededde_lua_source + '_end'
+            '-DEMBEDDED_LUA_SRC_END=_binary_' + embededde_lua_source + '_end',
         ]
     endif
 endif
@@ -61,7 +69,9 @@ if kconfig.has_key('CONFIG_SSL_IMPL_OPENSSL')
         endif
     endif
 
-    if kconfig.has_key('CONFIG_SIGALG_RAWRSA') or kconfig.has_key('CONFIG_SIGALG_RSAPSS')
+    if kconfig.has_key('CONFIG_SIGALG_RAWRSA') or kconfig.has_key(
+        'CONFIG_SIGALG_RSAPSS',
+    )
         sources += 'swupdate_rsa_verify.c'
     endif
 
@@ -97,7 +107,9 @@ if kconfig.has_key('CONFIG_SSL_IMPL_MBEDTLS')
         endif
     endif
 
-    if kconfig.has_key('CONFIG_SIGALG_RAWRSA') or kconfig.has_key('CONFIG_SIGALG_RSAPSS')
+    if kconfig.has_key('CONFIG_SIGALG_RAWRSA') or kconfig.has_key(
+        'CONFIG_SIGALG_RSAPSS',
+    )
         sources += 'swupdate_rsa_verify_mbedtls.c'
     endif
 endif

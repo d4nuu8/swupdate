@@ -14,7 +14,17 @@ project(
 	version: files('meson.version'),
 )
 
-add_global_arguments('-DSWU_VER="1.0.0"', language: 'c')
+version_components = meson.project_version().split('.')
+version_year = version_components[0]
+version_month = version_components[1]
+version_patch = version_components[2]
+version_extra = run_command('./scripts/gen_extraversion', check: true).stdout().strip()
+
+add_global_arguments('-DVERSION_YEAR=' + version_year, language: 'c')
+add_global_arguments('-DVERSION_MONTH=' + version_month, language: 'c')
+add_global_arguments('-DVERSION_PATCH=' + version_patch, language: 'c')
+add_global_arguments('-DVERSION_EXTRA=' + version_extra, language: 'c')
+
 add_global_arguments('-D_GNU_SOURCE', language: 'c')
 
 cc = meson.get_compiler('c')

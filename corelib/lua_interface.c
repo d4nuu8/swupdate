@@ -1007,18 +1007,18 @@ static void lua_push_enum(lua_State *L, const char *name, int value)
 
 int lua_get_swupdate_version(lua_State *L)
 {
-	const unsigned int version = VERSION;
-	const unsigned int patchlevel = VERSION_PATCHLEVEL;
+	const unsigned int version_year = VERSION_YEAR;
+	const unsigned int version_month = VERSION_MONTH;
 
 	lua_newtable (L);
 	lua_pushnumber(L, 1);
-	lua_pushnumber(L, version);
+	lua_pushnumber(L, version_year);
 	lua_settable(L, -3);
 	lua_pushnumber(L, 2);
-	lua_pushnumber(L, patchlevel);
+	lua_pushnumber(L, version_month);
 	lua_settable(L, -3);
-	lua_push_enum(L, "version", version);
-	lua_push_enum(L, "patchlevel", patchlevel);
+	lua_push_enum(L, "version", version_year);
+	lua_push_enum(L, "patchlevel", version_month);
 	return 1;
 }
 

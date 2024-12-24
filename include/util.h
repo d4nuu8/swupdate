@@ -212,7 +212,6 @@ bool strtobool(const char *s);
 /*
  * Function to extract / copy images
  */
-void *saferealloc(void *ptr, size_t size);
 int copy_write(void *out, const void *buf, size_t len);
 #if defined(__FreeBSD__)
 int copy_write_padded(void *out, const void *buf, size_t len);

@@ -123,6 +123,17 @@ void zchunk_range_free(zck_range **info) {
 	*info = NULL;
 }
 
+static void *saferealloc(void *ptr, size_t size) {
+    void *ret = realloc(ptr, size);
+    /*
+     * Realloc does not touch the original block if fails.
+     * Policy is to free memory and returns with error (Null)
+     */
+    if (!ret && ptr)
+        free(ptr);
+    return ret;
+}
+
 char *zchunk_get_range_char(zck_range *range) {
 	int buf_size = BUF_SIZE;
 	char *output = calloc(1, buf_size);

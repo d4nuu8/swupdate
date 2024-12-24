@@ -37,6 +37,8 @@ typedef enum {
 
 #define USE_PROXY_ENV (char *)0x11
 
+#define SHA_DIGEST_LENGTH	20
+
 /*
  * Structure to configure the connection and to
  * exchange data.
@@ -87,7 +89,7 @@ typedef struct {
 	size_t (*headers)(char *streamdata, size_t size, size_t nmemb,
 				   void *data);
 	struct swupdate_digest *dgst;
-	char sha1hash[SWUPDATE_SHA_DIGEST_LENGTH * 2 + 1];
+	char sha1hash[SHA_DIGEST_LENGTH * 2 + 1];
 	sourcetype source;
 	struct dict *headers_to_send;
 	struct dict *received_headers;

@@ -85,7 +85,7 @@ channel_op_res_t __wrap_channel_get_file(channel_t *this, void *data)
 #ifdef CONFIG_SURICATTA_SSL
 	channel_data_t *channel_data = (channel_data_t *)data;
 	strncpy(channel_data->sha1hash, mock_type(char *),
-		SWUPDATE_SHA_DIGEST_LENGTH * 2 + 1);
+		SHA_DIGEST_LENGTH * 2 + 1);
 #else
 	(void)data;
 #endif

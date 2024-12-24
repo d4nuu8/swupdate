@@ -290,7 +290,3 @@ int swupdate_temporary_umount(char *mountpoint);
 
 /* Date / Time utilities */
 char *swupdate_time_iso8601(struct timeval *tv);
-
-/* eMMC functions */
-int emmc_write_bootpart(int fd, int bootpart);
-int emmc_get_active_bootpart(int fd);

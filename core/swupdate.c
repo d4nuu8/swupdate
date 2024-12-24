@@ -26,6 +26,7 @@
 
 #include "bsdqueue.h"
 #include "cpiohdr.h"
+#include "emmc_utils.h"
 #include "util.h"
 #include "swupdate.h"
 #include "parsers.h"

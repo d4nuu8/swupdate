@@ -17,6 +17,7 @@
 #endif
 #include <sys/types.h>
 
+#include "emmc_utils.h"
 #include "lua.h"
 #include "lauxlib.h"
 #include "lualib.h"

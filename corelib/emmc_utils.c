@@ -4,24 +4,22 @@
  *
  * SPDX-License-Identifier:     GPL-2.0-only
  */
-#include <stdio.h>
+
 #include <unistd.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <stddef.h>
 #include <stdint.h>
-#include <errno.h>
-#if defined(__linux__)
-#include <linux/version.h>
-#endif
+#include <string.h>
+
 #include <sys/ioctl.h>
+
 #if defined(__linux__)
 #include <linux/major.h>
 #include <linux/mmc/ioctl.h>
 #elif defined(__FreeBSD__)
 #include <dev/mmc/mmc_ioctl.h>
+#include "compat.h"
 #endif
+
+#include "emmc_utils.h"
 #include "emmc.h"
 #include "util.h"
 

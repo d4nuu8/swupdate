@@ -27,6 +27,8 @@
 #elif defined(__FreeBSD__)
 #include <dev/mmc/mmc_ioctl.h>
 #endif
+
+#include "emmc_utils.h"
 #include "swupdate_image.h"
 #include "handler.h"
 #include "util.h"

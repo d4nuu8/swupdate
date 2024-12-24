@@ -30,8 +30,6 @@
 #define AES_192_KEY_LEN	24
 #define AES_256_KEY_LEN	32
 
-#define HWID_REGEXP_PREFIX	"#RE:"
-
 #define BOOTVAR_TRANSACTION "recovery_status"
 
 struct img_type;
@@ -242,7 +240,6 @@ char *string_tolower(char *s);
 size_t snescape(char *dst, size_t n, const char *src);
 void freeargs (char **argv);
 int compare_versions(const char* left_version, const char* right_version);
-int hwid_match(const char* rev, const char* hwrev);
 int count_elem_list(struct imglist *list);
 unsigned int count_string_array(const char **nodes);
 void free_string_array(char **nodes);

@@ -718,8 +718,7 @@ int main(int argc, char **argv)
 			break;
 #ifdef CONFIG_DOWNLOAD
 		case 'd':
-			if (asprintf(&dwloptions,"%s %s", argv[0], optarg) ==
-			ENOMEM_ASPRINTF) {
+			if (asprintf(&dwloptions,"%s %s", argv[0], optarg) == -1) {
 				ERROR("Cannot allocate memory for downloader options.");
 				exit(EXIT_FAILURE);
 			}
@@ -737,8 +736,7 @@ int main(int argc, char **argv)
 			break;
 #ifdef CONFIG_SURICATTA
 		case 'u':
-			if (asprintf(&suricattaoptions,"%s %s", argv[0], optarg) ==
-			ENOMEM_ASPRINTF) {
+			if (asprintf(&suricattaoptions,"%s %s", argv[0], optarg) == -1) {
 				ERROR("Cannot allocate memory for suricatta options.");
 				exit(EXIT_FAILURE);
 			}
@@ -749,8 +747,7 @@ int main(int argc, char **argv)
 #endif
 #ifdef CONFIG_WEBSERVER
 		case 'w':
-			if (asprintf(&weboptions,"%s %s", argv[0], optarg) ==
-			ENOMEM_ASPRINTF) {
+			if (asprintf(&weboptions,"%s %s", argv[0], optarg) == -1) {
 				ERROR("Cannot allocate memory for webserver options.");
 				exit(EXIT_FAILURE);
 			}

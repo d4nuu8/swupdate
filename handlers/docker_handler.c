@@ -129,7 +129,7 @@ static int docker_send_cmd_with_setup(struct img_type *img, void *data, docker_s
 	if (!script_data || script_data->scriptfn != POSTINSTALL)
 		return 0;
 
-	if (asprintf(&script, "%s%s", get_tmpdirscripts(), img->fname) == ENOMEM_ASPRINTF) {
+	if (asprintf(&script, "%s%s", get_tmpdirscripts(), img->fname) == -1) {
 		ERROR("OOM when creating script path");
 		return -ENOMEM;
 	}

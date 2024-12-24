@@ -215,7 +215,7 @@ static int grubenv_write(struct grubenv_t *grubenv)
 		llen = strlen(key) + strlen(value) + 2;
 		/* +1 for null termination */
 		ret = asprintf(&tmp, "%s=%s\n", key, value);
-		if (ret == ENOMEM_ASPRINTF) {
+		if (ret == -1) {
 			ERROR("OOM when copying Grub Env");
 			goto cleanup;
 		}

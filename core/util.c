@@ -149,8 +149,7 @@ const char* get_tmpdirscripts(void)
 
 void swupdate_create_directory(const char* path) {
 	char* dpath;
-	if (asprintf(&dpath, "%s%s", get_tmpdir(), path) ==
-		ENOMEM_ASPRINTF) {
+	if (asprintf(&dpath, "%s%s", get_tmpdir(), path) == -1) {
 		ERROR("OOM: Directory %s not created", path);
 		return;
 	}
@@ -195,8 +194,7 @@ int swupdate_remove_directory(const char* path)
 {
 	char* dpath;
 	int ret;
-	if (asprintf(&dpath, "%s%s", get_tmpdir(), path) ==
-		ENOMEM_ASPRINTF) {
+	if (asprintf(&dpath, "%s%s", get_tmpdir(), path) == -1) {
 		ERROR("OOM: Directory %s not removed", path);
 		return -ENOMEM;
 	}
@@ -279,8 +277,7 @@ char *mstrcat(const char **nodes, const char *delim)
 			if (!dest)
 				return NULL;
 		} else {
-			if (asprintf(&buf, "%s%s%s", dest, delim, *node) ==
-				ENOMEM_ASPRINTF) {
+			if (asprintf(&buf, "%s%s%s", dest, delim, *node) == -1) {
 				ERROR("Path too long, OOM");
 				free(dest);
 				return NULL;

@@ -88,8 +88,7 @@ static bool is_selection_allowed(const char *software_set, char *running_mode,
 	if (!strlen(software_set) || !strlen(running_mode))
 		return true;
 
-	if (ENOMEM_ASPRINTF ==
-		asprintf(&swset, "%s,%s", software_set, running_mode)) {
+	if (asprintf(&swset, "%s,%s", software_set, running_mode) == -1) {
 			 ERROR("OOM generating selection string");
 			 return false;
 	}

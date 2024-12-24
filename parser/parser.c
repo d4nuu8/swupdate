@@ -1058,7 +1058,7 @@ int parse_cfg(struct swupdate_cfg *swcfg, const char *filename, char **error)
 	DEBUG("Parsing config file %s", filename);
 	if(config_read_file(&cfg, filename) != CONFIG_TRUE) {
 		if (asprintf(error, "%s:%d - %s\n", config_error_file(&cfg),
-			     config_error_line(&cfg), config_error_text(&cfg)) == ENOMEM_ASPRINTF) {
+			     config_error_line(&cfg), config_error_text(&cfg)) == -1) {
 			ERROR("OOM when caching error");
 			return -ENOMEM;
 		}
@@ -1127,7 +1127,7 @@ int parse_json(struct swupdate_cfg *swcfg, const char *filename, char **error)
 
 	cfg = json_tokener_parse(string);
 	if (!cfg) {
-		if (asprintf(error, "JSON File corrupted") == ENOMEM_ASPRINTF) {
+		if (asprintf(error, "JSON File corrupted") == -1) {
 			ERROR("OOM when caching error");
 			free(string);
 			return -ENOMEM;

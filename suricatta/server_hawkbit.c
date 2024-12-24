@@ -158,8 +158,7 @@ static inline void server_hawkbit_settoken(const char *type, const char *token)
 	if (!token)
 		return;
 
-	if (ENOMEM_ASPRINTF ==
-		asprintf(&tokens_header, "Authorization: %s %s", type, token)) {
+	if (asprintf(&tokens_header, "Authorization: %s %s", type, token) == -1) {
 			ERROR("OOM when setting %s.", type);
 		return;
 	}
@@ -261,9 +260,8 @@ static void check_action_changed(int action_id, const char *update_action)
 		INFO("Update classified as '%s' by server.",
 			server_hawkbit.update_action);
 
-		if (ENOMEM_ASPRINTF ==
-		    asprintf(&notifybuf, "{ \"id\" : \"%d\", \"update\" : \"%s\"}",
-				action_id, server_hawkbit.update_action)) {
+		if (asprintf(&notifybuf, "{ \"id\" : \"%d\", \"update\" : \"%s\"}",
+				action_id, server_hawkbit.update_action) == -1) {
 			notify(SUBPROCESS, CHANGE, DEBUGLEVEL, "Update type changed by server");
 		}  else {
 			notify(SUBPROCESS, CHANGE, DEBUGLEVEL, notifybuf);
@@ -301,9 +299,8 @@ server_op_res_t server_send_cancel_reply(channel_t *channel, const int action_id
 	char *url = NULL;
 	char *json_reply_string = NULL;
 
-	if (ENOMEM_ASPRINTF ==
-	    asprintf(&url, "%s/feedback",
-		     server_hawkbit.cancel_url)) {
+	if (asprintf(&url, "%s/feedback",
+		     server_hawkbit.cancel_url) == -1) {
 		ERROR("hawkBit server reply cannot be sent because of OOM.");
 		result = SERVER_EINIT;
 		goto cleanup;
@@ -312,11 +309,10 @@ server_op_res_t server_send_cancel_reply(channel_t *channel, const int action_id
 	char fdate[15 + 1];
 	time_t now = time(NULL) == (time_t)-1 ? 0 : time(NULL);
 	(void)strftime(fdate, sizeof(fdate), "%Y%m%dT%H%M%S", localtime(&now));
-	if (ENOMEM_ASPRINTF ==
-	    asprintf(&json_reply_string, json_hawkbit_cancelation_feedback,
+	if (asprintf(&json_reply_string, json_hawkbit_cancelation_feedback,
 		     stop_id, fdate, reply_status_result_finished.success,
 		     reply_status_execution.closed,
-		     "cancellation acknowledged.")) {
+		     "cancellation acknowledged.") == -1) {
 		ERROR("hawkBit server reply cannot be sent because of OOM.");
 		result = SERVER_EINIT;
 		goto cleanup;
@@ -339,9 +335,8 @@ cleanup:
 	 * Send always a notification
 	 */
 	char *notifybuf = NULL;
-	if (ENOMEM_ASPRINTF ==
-	    asprintf(&notifybuf, "{ \"id\" : \"%d\", \"stopId\" : \"%d\"}",
-		     action_id, stop_id)) {
+	if (asprintf(&notifybuf, "{ \"id\" : \"%d\", \"stopId\" : \"%d\"}",
+		     action_id, stop_id) == -1) {
 		notify(SUBPROCESS, CANCELUPDATE, INFOLEVEL, "Update cancelled");
 	}  else {
 		notify(SUBPROCESS, CANCELUPDATE, INFOLEVEL, notifybuf);
@@ -368,7 +363,7 @@ static char *server_create_details(int numdetails, const char *details[])
 			ret = asprintf(&next, "%s,\"%s\"", prev, details[i]);
 			free(prev);
 		}
-		if (ret == ENOMEM_ASPRINTF)
+		if (ret == -1)
 			return NULL;
 		prev = next;
 	}
@@ -419,18 +414,16 @@ server_send_deployment_reply(channel_t *channel,
 	char fdate[15 + 1];
 	time_t now = time(NULL) == (time_t)-1 ? 0 : time(NULL);
 	(void)strftime(fdate, sizeof(fdate), "%Y%m%dT%H%M%S", localtime(&now));
-	if (ENOMEM_ASPRINTF ==
-	    asprintf(&json_reply_string, json_hawkbit_deployment_feedback,
+	if (asprintf(&json_reply_string, json_hawkbit_deployment_feedback,
 		     action_id, fdate, job_cnt_cur, job_cnt_max, finished,
-		     execution_status, detail ? detail : " ")) {
+		     execution_status, detail ? detail : " ") == -1) {
 		ERROR("hawkBit server reply cannot be sent because of OOM.");
 		result = SERVER_EINIT;
 		goto cleanup;
 	}
-	if (ENOMEM_ASPRINTF ==
-	    asprintf(&url, "%s/%s/controller/v1/%s/deploymentBase/%d/feedback",
+	if (asprintf(&url, "%s/%s/controller/v1/%s/deploymentBase/%d/feedback",
 		     server_hawkbit.url, server_hawkbit.tenant,
-		     server_hawkbit.device_id, action_id)) {
+		     server_hawkbit.device_id, action_id) == -1) {
 		ERROR("hawkBit server reply cannot be sent because of OOM.");
 		result = SERVER_EINIT;
 		goto cleanup;
@@ -548,10 +541,9 @@ static server_op_res_t server_get_device_info(channel_t *channel, channel_data_t
 	DEBUG("Getting information for device '%s'",
 	      server_hawkbit.device_id);
 	server_op_res_t result = SERVER_OK;
-	if (ENOMEM_ASPRINTF ==
-	    asprintf(&channel_data->url, "%s/%s/controller/v1/%s",
+	if (asprintf(&channel_data->url, "%s/%s/controller/v1/%s",
 		     server_hawkbit.url, server_hawkbit.tenant,
-		     server_hawkbit.device_id)) {
+		     server_hawkbit.device_id) == -1) {
 		ERROR("hawkBit server cannot be queried because of OOM.");
 		result = SERVER_EINIT;
 		goto cleanup;
@@ -1108,7 +1100,7 @@ server_op_res_t server_process_update_artifact(int action_id,
 	json_object *json_data_artifact_item = NULL;
 
 	char *action_id_str;
-	if (asprintf(&action_id_str, "%d", action_id) == ENOMEM_ASPRINTF) {
+	if (asprintf(&action_id_str, "%d", action_id) == -1) {
 		ERROR("OOM reached when saving action_id");
 		return SERVER_EERR;
 	}
@@ -1212,13 +1204,12 @@ server_op_res_t server_process_update_artifact(int action_id,
 		"id" : "%d"
 		}
 		);
-		if (ENOMEM_ASPRINTF ==
-		    asprintf(&channel_data.info, update_info,
+		if (asprintf(&channel_data.info, update_info,
 			    SERVER_NAME,
 			    update_action,
 			    part,
 			    version,
-			    name, action_id)) {
+			    name, action_id) == -1) {
 			ERROR("hawkBit server reply cannot be sent because of OOM.");
 			result = SERVER_EBADMSG;
 			goto cleanup_loop;
@@ -1588,11 +1579,10 @@ static server_op_res_t server_send_target_data(void)
 		char *key = dict_entry_get_key(entry);
 		char *value = dict_entry_get_value(entry);
 
-		if (ENOMEM_ASPRINTF ==
-		    asprintf(&keyvalue, config_data,
+		if (asprintf(&keyvalue, config_data,
 				((first) ? ' ' : ','),
 				key,
-				value)) {
+				value) == -1) {
 			ERROR("hawkBit server reply cannot be sent because of OOM.");
 			result = SERVER_EINIT;
 			pthread_mutex_unlock(&ipc_lock);
@@ -1631,19 +1621,17 @@ static server_op_res_t server_send_target_data(void)
 	time_t now = time(NULL) == (time_t)-1 ? 0 : time(NULL);
 	(void)strftime(fdate, sizeof(fdate), "%Y%m%dT%H%M%S", localtime(&now));
 
-	if (ENOMEM_ASPRINTF ==
-	    asprintf(&json_reply_string, json_hawkbit_config_data,
+	if (asprintf(&json_reply_string, json_hawkbit_config_data,
 		     "", fdate, reply_status_result_finished.success,
 		     reply_status_execution.closed,
-		     "", configData)) {
+		     "", configData) == -1) {
 		ERROR("hawkBit server reply cannot be sent because of OOM.");
 		result = SERVER_EINIT;
 		goto cleanup;
 	}
-	if (ENOMEM_ASPRINTF ==
-	    asprintf(&url, "%s/%s/controller/v1/%s/configData",
+	if (asprintf(&url, "%s/%s/controller/v1/%s/configData",
 		     server_hawkbit.url, server_hawkbit.tenant,
-		     server_hawkbit.device_id)) {
+		     server_hawkbit.device_id) == -1) {
 		ERROR("hawkBit server reply cannot be sent because of OOM.");
 		result = SERVER_EINIT;
 		goto cleanup;

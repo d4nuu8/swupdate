@@ -548,8 +548,8 @@ static channel_op_res_t channel_set_content_type(channel_t *this,
 	else
 		content = "application/json";
 
-	if (ENOMEM_ASPRINTF == asprintf(&contenttype, "Content-Type: %s%s", content,
-		!strcmp(content, "application/text") ? "; charset=utf-8" : "")) {
+	if (asprintf(&contenttype, "Content-Type: %s%s", content,
+		!strcmp(content, "application/text") ? "; charset=utf-8" : "") == -1) {
 			ERROR("OOM when setting Content-type.");
 			result = CHANNEL_EINIT;
 	} else {
@@ -562,7 +562,7 @@ static channel_op_res_t channel_set_content_type(channel_t *this,
 
 	if (channel_data->accept_content_type)
 		content = channel_data->accept_content_type;
-	if (ENOMEM_ASPRINTF == asprintf(&accept, "Accept: %s", content)) {
+	if (asprintf(&accept, "Accept: %s", content) == -1) {
 		ERROR("OOM when setting Accept.");
 		result = CHANNEL_EINIT;
 	} else {
@@ -709,10 +709,9 @@ channel_op_res_t channel_set_options(channel_t *this, channel_data_t *channel_da
 		char *header;
 		LIST_FOREACH(entry, channel_data->headers_to_send, next)
 		{
-			if (ENOMEM_ASPRINTF ==
-			    asprintf(&header, "%s: %s",
+			if (asprintf(&header, "%s: %s",
 				     dict_entry_get_key(entry),
-				     dict_entry_get_value(entry))) {
+				     dict_entry_get_value(entry)) == -1) {
 				result = CHANNEL_EINIT;
 				goto cleanup;
 			}

@@ -381,7 +381,7 @@ static char *server_prepare_query(char *url, struct dict *dict)
 		 */
 		free(encoded);
 
-		if (ret == ENOMEM_ASPRINTF) {
+		if (ret == -1) {
 			ERROR("Error generating query for general service");
 			qry = NULL;
 			goto cleanup;

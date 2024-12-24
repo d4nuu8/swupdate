@@ -139,8 +139,7 @@ extract(void *p)
 	 * Enabling bzip2 is more expensive because the libbz2 library
 	 * isn't very well factored.
 	 */
-	if  (asprintf(&FIFO, "%s%s", get_tmpdir(), FIFO_FILE_NAME) ==
-		ENOMEM_ASPRINTF) {
+	if  (asprintf(&FIFO, "%s%s", get_tmpdir(), FIFO_FILE_NAME) == -1) {
 		ERROR("Path too long: %s", get_tmpdir());
 		exitval = -ENOMEM;
 		goto out;
@@ -244,8 +243,7 @@ static int install_archive_image(struct img_type *img,
 		return -EINVAL;
 	}
 
-	if ((asprintf(&FIFO, "%s%s", get_tmpdir(), FIFO_FILE_NAME) ==
-		ENOMEM_ASPRINTF)) {
+	if ((asprintf(&FIFO, "%s%s", get_tmpdir(), FIFO_FILE_NAME) == -1)) {
 		ERROR("Path too long: %s", get_tmpdir());
 		exitval = -ENOMEM;
 		goto out;

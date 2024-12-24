@@ -117,12 +117,12 @@ static void lua_dump_table(lua_State *L, char *str, struct img_type *img, const 
 				char *s;
 				char *propkey;
 
-				if (asprintf(&propkey, "%s", lua_tostring(L, -1)) == ENOMEM_ASPRINTF) {
+				if (asprintf(&propkey, "%s", lua_tostring(L, -1)) == -1) {
 					TRACE("Out of memory, dump stopped");
 					break;
 				}
 
-				if (asprintf(&s, "%s %s:", str, propkey) != ENOMEM_ASPRINTF) {
+				if (asprintf(&s, "%s %s:", str, propkey) != -1) {
 					lua_pushvalue(L, -2);
 					lua_dump_table(L, s, img, propkey);
 					lua_pop(L, 1);
@@ -174,7 +174,7 @@ void LUAstackDump(lua_State *L)
 			case LUA_TTABLE: {
 				char *s;
 
-				if (asprintf(&s, "(%d) [table ]", i) != ENOMEM_ASPRINTF) {
+				if (asprintf(&s, "(%d) [table ]", i) != -1) {
 					lua_pushvalue(L, i);
 					lua_dump_table(L, s, NULL, NULL);
 					lua_pop(L, 1);

@@ -23,8 +23,7 @@
 #include "swupdate_dict.h"
 #include "compat.h"
 
-#define NOTIFY_BUF_SIZE 	2048
-#define ENOMEM_ASPRINTF		-1
+#define NOTIFY_BUF_SIZE	2048
 
 #define SWUPDATE_SHA_DIGEST_LENGTH	20
 #define AES_BLK_SIZE	16

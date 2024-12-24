@@ -131,8 +131,7 @@ static int extract_scripts(struct imglist *head)
 			return fdout;
 
 
-		if (asprintf(&tmpfile, "%s%s", get_tmpdir(), script->fname) ==
-			ENOMEM_ASPRINTF) {
+		if (asprintf(&tmpfile, "%s%s", get_tmpdir(), script->fname) == -1) {
 			ERROR("Path too long: %s%s", get_tmpdir(), script->fname);
 			close(fdout);
 			return -ENOMEM;
@@ -393,8 +392,7 @@ int install_images(struct swupdate_cfg *sw)
 		if (img->install_directly)
 			continue;
 
-		if (asprintf(&filename, "%s%s", TMPDIR, img->fname) ==
-				ENOMEM_ASPRINTF) {
+		if (asprintf(&filename, "%s%s", TMPDIR, img->fname) == -1) {
 				ERROR("Path too long: %s%s", TMPDIR, img->fname);
 				return -1;
 		}
@@ -503,7 +501,7 @@ static void cleaup_img_entry(struct img_type *img)
 
 	if (img->fname[0]) {
 		for (unsigned int i = 0; i < ARRAY_SIZE(tmp); i++) {
-			if (asprintf(&fn, "%s%s", tmp[i], img->fname) == ENOMEM_ASPRINTF) {
+			if (asprintf(&fn, "%s%s", tmp[i], img->fname) == -1) {
 				ERROR("Path too long: %s%s", tmp[i], img->fname);
 			} else {
 				remove_sw_file(fn);
@@ -529,8 +527,7 @@ void cleanup_files(struct swupdate_cfg *software) {
 
 	LIST_FOREACH_SAFE(img, &software->images, next, img_tmp) {
 		if (img->fname[0]) {
-			if (asprintf(&fn, "%s%s", TMPDIR,
-				     img->fname) == ENOMEM_ASPRINTF) {
+			if (asprintf(&fn, "%s%s", TMPDIR, img->fname) == -1) {
 				ERROR("Path too long: %s%s", TMPDIR, img->fname);
 			}
 			remove_sw_file(fn);
@@ -563,7 +560,7 @@ void cleanup_files(struct swupdate_cfg *software) {
 		lua_exit(software->lua_state);
 		software->lua_state = NULL;
 	}
-	if (asprintf(&fn, "%s%s", TMPDIR, BOOT_SCRIPT_SUFFIX) != ENOMEM_ASPRINTF) {
+	if (asprintf(&fn, "%s%s", TMPDIR, BOOT_SCRIPT_SUFFIX) != -1) {
 		remove_sw_file(fn);
 		free(fn);
 	}
@@ -572,12 +569,12 @@ void cleanup_files(struct swupdate_cfg *software) {
 		LIST_REMOVE(hw, next);
 		free(hw);
 	}
-	if (asprintf(&fn, "%s%s", TMPDIR, SW_DESCRIPTION_FILENAME) != ENOMEM_ASPRINTF) {
+	if (asprintf(&fn, "%s%s", TMPDIR, SW_DESCRIPTION_FILENAME) != -1) {
 		remove_sw_file(fn);
 		free(fn);
 	}
 #ifdef CONFIG_SIGNED_IMAGES
-	if (asprintf(&fn, "%s%s.sig", TMPDIR, SW_DESCRIPTION_FILENAME) != ENOMEM_ASPRINTF) {
+	if (asprintf(&fn, "%s%s.sig", TMPDIR, SW_DESCRIPTION_FILENAME) != -1) {
 		remove_sw_file(fn);
 		free(fn);
 	}

@@ -245,6 +245,66 @@ void start_subprocess(sourcetype type, const char *name,
 	start_swupdate_subprocess(type, name, run_as_userid, run_as_groupid, cfgfile, argc, argv, start, NULL);
 }
 
+static int read_lines_notify(int fd, char *buf, int buf_size, int *buf_offset,
+		      LOGLEVEL level)
+{
+	int n;
+	int offset = *buf_offset;
+	int print_last = 0;
+
+	n = read(fd, &buf[offset], buf_size - offset - 1);
+	if (n <= 0)
+		return -errno;
+
+	/* replace zeroes with @ signs */
+	for (unsigned int index = 0; index < n; index++) {
+		if (!buf[offset+index])
+			buf[offset+index] = '@';
+	}
+
+	n += offset;
+	buf[n] = '\0';
+
+	/*
+	 * Only print the last line of the split array if it represents a
+	 * full line, as string_split (strtok) makes it impossible to tell
+	 * afterwards if the buffer ended with separator.
+	 */
+	if (buf[n-1] == '\n') {
+		print_last = 1;
+	}
+
+	char **lines = string_split(buf, '\n');
+	if (!lines)
+		return -errno;
+	int nlines = count_string_array((const char **)lines);
+	/*
+	 * If the buffer is full and there is only one line,
+	 * print it anyway.
+	 */
+	if (n >= buf_size - 1 && nlines == 1)
+		print_last = 1;
+
+	/* copy leftover data for next call */
+	if (!print_last) {
+		int left = snprintf(buf, buf_size, "%s", lines[nlines-1]);
+		*buf_offset = left;
+		nlines--;
+		n -= left;
+	} else { /* no need to copy, reuse all buffer */
+		*buf_offset = 0;
+	}
+
+	for (unsigned int index = 0; index < nlines; index++) {
+		RECOVERY_STATUS status = level == ERRORLEVEL ? FAILURE : RUN;
+		swupdate_notify(status, "%s", level, lines[index]);
+	}
+
+	free_string_array(lines);
+
+	return n;
+}
+
 /*
  * run_cmd executes a shell script or an internal function in background
  * in a separate process and intercepts stdout and stderr, writing then to

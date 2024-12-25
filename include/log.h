@@ -91,5 +91,4 @@ extern int loglevel;
 
 
 int register_notifier(notifier client);
-int read_lines_notify(int fd, char *buf, int buf_size, int *buf_offset, LOGLEVEL level);
 int syslog_init(void);

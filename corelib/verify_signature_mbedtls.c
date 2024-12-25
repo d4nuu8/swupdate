@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 #include "sslapi.h"
-#include "util.h"
+#include "log.h"
 #include "swupdate.h"
 
 static char *algo_upper(const char *algo)

@@ -27,7 +27,7 @@
 #include <mtd/mtd-user.h>
 #include "swupdate_image.h"
 #include "handler.h"
-#include "util.h"
+#include "log.h"
 #include "flash.h"
 #include "progress.h"
 

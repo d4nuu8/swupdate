@@ -14,7 +14,7 @@
 #include <unistd.h>
 
 #include "sslapi.h"
-#include "util.h"
+#include "log.h"
 
 static int read_file_into_buffer(uint8_t *buffer, int size, const char *filename)
 {

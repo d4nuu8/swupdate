@@ -27,7 +27,7 @@
 #include "bsdqueue.h"
 #include "cpiohdr.h"
 #include "emmc_utils.h"
-#include "util.h"
+#include "log.h"
 #include "swupdate.h"
 #include "parsers.h"
 #include "network_interface.h"

@@ -7,12 +7,13 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <string.h>
 #include <time.h>
 #include <unistd.h>
 #include <linux/fs.h>
 #include <sys/ioctl.h>
 
-#include "util.h"
+#include "log.h"
 
 #include "ff.h"
 #include "diskio.h"

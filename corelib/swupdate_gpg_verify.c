@@ -10,7 +10,7 @@
 #include <stdbool.h>
 #include "swupdate.h"
 #include "sslapi.h"
-#include "util.h"
+#include "log.h"
 
 #include <errno.h>
 #include <locale.h>

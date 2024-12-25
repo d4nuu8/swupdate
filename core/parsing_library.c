@@ -16,7 +16,9 @@
 #include <assert.h>
 #include "generated/autoconf.h"
 #include "bsdqueue.h"
+#include "globals.h"
 #include "util.h"
+#include "log.h"
 #include "parselib.h"
 #include "parselib-private.h"
 

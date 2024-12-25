@@ -16,7 +16,7 @@
 #include <zmq.h>
 
 #include "handler.h"
-#include "util.h"
+#include "log.h"
 #include "swupdate_image.h"
 
 #define MSG_FRAMES	2

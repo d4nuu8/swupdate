@@ -21,7 +21,7 @@
 #include <errno.h>
 #include <zck.h>
 #include "zchunk_range.h"
-#include "util.h"
+#include "log.h"
 
 #define BUF_SIZE 32768
 static zck_range_item *range_insert_new(zck_range_item *prev,

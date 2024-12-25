@@ -23,7 +23,7 @@
 #include "generated/autoconf.h"
 #include "cpiohdr.h"
 #include "swupdate.h"
-#include "util.h"
+#include "log.h"
 #include "sslapi.h"
 #include "progress.h"
 

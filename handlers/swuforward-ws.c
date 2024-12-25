@@ -18,7 +18,7 @@
 #include <errno.h>
 #include <string.h>
 #include <json-c/json.h>
-#include <util.h>
+#include "log.h"
 #include <parselib.h>
 #include "swuforward_handler.h"
 

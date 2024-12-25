@@ -14,7 +14,7 @@
 #include "swupdate.h"
 #include "parsers.h"
 #include "sslapi.h"
-#include "util.h"
+#include "log.h"
 #include "progress.h"
 #include "handler.h"
 

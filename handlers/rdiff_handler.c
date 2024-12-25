@@ -21,7 +21,7 @@
 #endif
 #include "swupdate_image.h"
 #include "handler.h"
-#include "util.h"
+#include "log.h"
 
 /* Use rdiff's default inbuf and outbuf size of 64K */
 #define RDIFF_BUFFER_SIZE 64 * 1024

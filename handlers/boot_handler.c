@@ -16,7 +16,7 @@
 #include "generated/autoconf.h"
 #include "swupdate_image.h"
 #include "handler.h"
-#include "util.h"
+#include "log.h"
 #include "bootloader.h"
 #include "progress.h"
 

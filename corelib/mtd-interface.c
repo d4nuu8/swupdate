@@ -17,7 +17,7 @@
 #include <errno.h>
 #include <limits.h>
 #include "bsdqueue.h"
-#include "util.h"
+#include "log.h"
 #include "flash.h"
 
 static char mtd_ubi_blacklist[100] = { 0 };

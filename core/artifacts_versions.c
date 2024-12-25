@@ -18,7 +18,7 @@
 #include <assert.h>
 #include "generated/autoconf.h"
 #include "bsdqueue.h"
-#include "util.h"
+#include "log.h"
 #include "swupdate.h"
 #include "parselib.h"
 #include "swupdate_settings.h"

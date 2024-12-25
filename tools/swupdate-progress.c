@@ -9,7 +9,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
-#include <util.h>
+#include "util.h"
+#include "log.h"
 #include <string.h>
 #include <errno.h>
 #include <sys/ioctl.h>

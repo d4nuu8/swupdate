@@ -15,7 +15,7 @@
 #include "progress.h"
 #include "swupdate_image.h"
 #include "handler.h"
-#include <util.h>
+#include "log.h"
 #include <pctl.h>
 #include "handler_helpers.h"
 

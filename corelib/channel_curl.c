@@ -21,7 +21,9 @@
 #include <generated/autoconf.h>
 #include <unistd.h>
 #include <network_ipc.h>
-#include <util.h>
+#include "util.h"
+#include "swupdate_dict.h"
+#include "log.h"
 #include "channel_op_res.h"
 #include "sslapi.h"
 #include "channel.h"

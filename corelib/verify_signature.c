@@ -13,7 +13,7 @@
 #include <stdbool.h>
 #include "swupdate.h"
 #include "sslapi.h"
-#include "util.h"
+#include "log.h"
 #include "compat.h"
 #include "swupdate_verify_private.h"
 

@@ -11,7 +11,7 @@
 #include <json-c/json.h>
 #include <signal.h>
 
-#include "util.h"
+#include "log.h"
 #include "network_ipc.h"
 #include "download_interface.h"
 #include "server_utils.h"

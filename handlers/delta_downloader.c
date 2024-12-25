@@ -26,7 +26,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
-#include <util.h>
+#include "log.h"
 #include <pctl.h>
 #include <zlib.h>
 #include <channel.h>

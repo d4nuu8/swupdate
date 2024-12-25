@@ -71,7 +71,7 @@
 
 #include "swupdate_image.h"
 #include "handler.h"
-#include "util.h"
+#include "log.h"
 
 #define MODE_PROG	0
 #define MODE_NORMAL 	1

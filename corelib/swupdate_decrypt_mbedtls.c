@@ -5,7 +5,7 @@
 #include <errno.h>
 
 #include "sslapi.h"
-#include "util.h"
+#include "log.h"
 
 struct swupdate_digest *swupdate_DECRYPT_init(unsigned char *key, char keylen, unsigned char *iv)
 {

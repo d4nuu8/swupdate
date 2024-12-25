@@ -20,7 +20,7 @@
 #include "installer.h"
 #include "swupdate_image.h"
 #include "pctl.h"
-#include "util.h"
+#include "log.h"
 
 struct thread_handle {
 	struct hnd_load_priv *hndtransfer;

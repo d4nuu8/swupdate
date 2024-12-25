@@ -14,7 +14,7 @@
 #include "swupdate.h"
 #include "handler.h"
 #include "lua_util.h"
-#include "util.h"
+#include "log.h"
 
 #define MAX_INSTALLER_HANDLER	64
 struct installer_handler supported_types[MAX_INSTALLER_HANDLER];

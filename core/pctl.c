@@ -20,7 +20,7 @@
 #include <pthread.h>
 #include <network_ipc.h>
 #include <pctl.h>
-#include <util.h>
+#include "log.h"
 #include <signal.h>
 #include <sys/wait.h>
 #include <parselib.h>

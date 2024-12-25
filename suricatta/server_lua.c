@@ -22,7 +22,7 @@
 
 #include <json-c/json_visit.h>
 
-#include <util.h>
+#include "log.h"
 #include <network_ipc.h>
 #include <progress_ipc.h>
 #include <channel.h>

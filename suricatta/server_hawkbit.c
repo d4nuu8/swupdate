@@ -15,7 +15,7 @@
 #include <errno.h>
 #include <json-c/json.h>
 #include <generated/autoconf.h>
-#include <util.h>
+#include "log.h"
 #include <network_ipc.h>
 #include <sys/time.h>
 #include <swupdate_status.h>

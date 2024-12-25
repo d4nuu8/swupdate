@@ -23,8 +23,6 @@
 #include "swupdate_dict.h"
 #include "compat.h"
 
-#define NOTIFY_BUF_SIZE	2048
-
 #define AES_BLK_SIZE	16
 #define AES_128_KEY_LEN	16
 #define AES_192_KEY_LEN	24
@@ -36,7 +34,6 @@ struct img_type;
 struct imglist;
 struct hw_type;
 
-extern int loglevel;
 extern int exit_code;
 
 typedef enum {
@@ -87,81 +84,6 @@ struct swupdate_copy {
 	bool encrypted;
 	const char *imgivt;
 };
-
-/*
- * loglevel is used into TRACE / ERROR
- * for values > LASTLOGLEVEL, it is an encoded field 
- * to inform the installer about a change in a subprocess
- */
-typedef enum {
-	OFF,
-	ERRORLEVEL,
-	WARNLEVEL,
-	INFOLEVEL,
-	TRACELEVEL,
-	DEBUGLEVEL,
-	LASTLOGLEVEL=DEBUGLEVEL
-} LOGLEVEL;
-
-/*
- * Following are used for notification from another process
- */
-
-typedef enum {
-	CANCELUPDATE=LASTLOGLEVEL + 1,
-	CHANGE,
-} NOTIFY_CAUSE;
-
-enum {
-	RECOVERY_NO_ERROR,
-	RECOVERY_ERROR,
-	RECOVERY_DWL,
-};
-
-typedef void (*notifier) (RECOVERY_STATUS status, int error, int level, const char *msg);
-
-void notify(RECOVERY_STATUS status, int error, int level, const char *msg);
-void notify_init(void);
-void notifier_set_color(int level, char *col);
-
-#define __FILENAME__ (__builtin_strrchr(__FILE__, '/') ? __builtin_strrchr(__FILE__, '/') + 1 : __FILE__)
-#define swupdate_notify(status, format, level, arg...) do { \
-	if (loglevel >= level) { \
-		char tmpbuf[NOTIFY_BUF_SIZE]; \
-		if (status == FAILURE) { \
-			if (loglevel >= DEBUGLEVEL) \
-				snprintf(tmpbuf, sizeof(tmpbuf), \
-				     	"ERROR %s : %s : %d : " format, \
-						__FILENAME__, \
-					       	__func__, \
-					       	__LINE__, \
-						## arg); \
-			else \
-				snprintf(tmpbuf, sizeof(tmpbuf), \
-					       	"ERROR : " format, ## arg); \
-			notify(FAILURE, 0, level, tmpbuf); \
-		} else {\
-			snprintf(tmpbuf, sizeof(tmpbuf), \
-				       	"[%s] : " format, __func__, ## arg); \
-			notify(RUN, RECOVERY_NO_ERROR, level, tmpbuf); \
-		} \
-	} \
-} while(0)
-
-#define ERROR(format, arg...) \
-	swupdate_notify(FAILURE, format, ERRORLEVEL, ## arg)
-
-#define WARN(format, arg...) \
-	swupdate_notify(RUN, format, WARNLEVEL, ## arg)
-
-#define INFO(format, arg...) \
-	swupdate_notify(RUN, format, INFOLEVEL, ## arg)
-
-#define TRACE(format, arg...) \
-	swupdate_notify(RUN, format, TRACELEVEL, ## arg)
-
-#define DEBUG(format, arg...) \
-	swupdate_notify(RUN, format, DEBUGLEVEL, ## arg)
 
 #ifndef ARRAY_SIZE
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
@@ -227,9 +149,6 @@ int openfileoutput(const char *filename);
 int mkpath(char *dir, mode_t mode);
 int swupdate_file_setnonblock(int fd, bool block);
 
-int register_notifier(notifier client);
-int syslog_init(void);
-
 char **splitargs(char *args, int *argc);
 char *mstrcat(const char **nodes, const char *delim);
 char *swupdate_strcat(int n, ...);
@@ -242,8 +161,6 @@ int compare_versions(const char* left_version, const char* right_version);
 int count_elem_list(struct imglist *list);
 unsigned int count_string_array(const char **nodes);
 void free_string_array(char **nodes);
-int read_lines_notify(int fd, char *buf, int buf_size, int *buf_offset,
-		      LOGLEVEL level);
 long long get_output_size(struct img_type *img, bool strict);
 bool img_check_free_space(struct img_type *img, int fd);
 bool check_same_file(int fd1, int fd2);

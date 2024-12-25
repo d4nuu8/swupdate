@@ -6,7 +6,6 @@
  */
 
 #pragma once
-#include "util.h"
 #include <stdbool.h>
 
 #ifdef CONFIG_UPDATE_STATE_CHOICE_BOOTLOADER

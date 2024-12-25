@@ -10,7 +10,7 @@
 
 obj-y += swupdate.o \
 	 cpio_utils.o \
-	 notifier.o \
+	 log.o \
 	 handler.o \
 	 bootloader.o \
 	 hw-compatibility.o \
@@ -19,7 +19,6 @@ obj-y += swupdate.o \
 	 parser.o \
 	 pctl.o \
 	 state.o \
-	 syslog.o \
 	 installer.o \
 	 network_utils.o \
 	 network_thread.o \

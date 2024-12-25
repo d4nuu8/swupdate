@@ -19,7 +19,7 @@
 #include <assert.h>
 #include "generated/autoconf.h"
 #include "bsdqueue.h"
-#include "util.h"
+#include "log.h"
 #include "swupdate_dict.h"
 
 static int insert_list_elem(struct dict_list *list, const char *value)

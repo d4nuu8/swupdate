@@ -6,7 +6,6 @@
  */
 
 #pragma once
-#include "util.h"
 #include <json-c/json.h>
 #include <stdio.h>
 #include <stdbool.h>

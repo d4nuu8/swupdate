@@ -38,7 +38,7 @@
 #include <limits.h>
 #include <blkid/blkid.h>
 #include <uuid/uuid.h>
-#include "util.h"
+#include "log.h"
 #include "fs_interface.h"
 
 #include <ext2fs/ext2_fs.h>

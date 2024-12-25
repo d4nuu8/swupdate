@@ -20,7 +20,7 @@
 
 #include "handler.h"
 #include "swupdate_image.h"
-#include "util.h"
+#include "log.h"
 
 void readback_handler(void);
 static int readback_postinst(struct img_type *img);

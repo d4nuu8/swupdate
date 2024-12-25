@@ -33,7 +33,7 @@
 
 #include "mongoose.h"
 #include "mongoose_multipart.h"
-#include "util.h"
+#include "log.h"
 
 #ifndef MG_TLS
 #define MG_TLS 0

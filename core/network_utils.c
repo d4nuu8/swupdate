@@ -10,6 +10,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <sys/un.h>
 #include <sys/stat.h>
 #include <sys/socket.h>
@@ -20,7 +21,7 @@
 
 #include "bsdqueue.h"
 #include "network_utils.h"
-#include "util.h"
+#include "log.h"
 
 #define LISTENQ	1024
 

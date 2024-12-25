@@ -23,7 +23,7 @@
 #include <libgen.h>
 #include "swupdate_image.h"
 #include "handler.h"
-#include "util.h"
+#include "log.h"
 #include "progress.h"
 
 void diskpart_handler(void);

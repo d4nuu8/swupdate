@@ -24,7 +24,7 @@
 
 #include "swupdate.h"
 #include <handler.h>
-#include "util.h"
+#include "log.h"
 #include "pctl.h"
 #include "network_ipc.h"
 #include "network_utils.h"

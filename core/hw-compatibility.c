@@ -11,7 +11,7 @@
 #include <string.h>
 
 #include "hw-compatibility.h"
-#include "notifier.h"
+#include "log.h"
 
 #define HWID_REGEXP_PREFIX	"#RE:"
 

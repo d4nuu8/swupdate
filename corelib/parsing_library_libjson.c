@@ -17,6 +17,7 @@
 #include "generated/autoconf.h"
 #include "bsdqueue.h"
 #include "util.h"
+#include "log.h"
 #include "parsers.h"
 #include "parselib.h"
 #include "parselib-private.h"

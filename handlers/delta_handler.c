@@ -31,12 +31,12 @@
 #include <signal.h>
 #include <zck.h>
 #include <zlib.h>
-#include <util.h>
 #include <pctl.h>
 #include <pthread.h>
 #include <fs_interface.h>
 #include <sys/mman.h>
 #include "delta_handler.h"
+#include "log.h"
 #include "multipart_parser.h"
 #include "zchunk_range.h"
 #include "handler_helpers.h"

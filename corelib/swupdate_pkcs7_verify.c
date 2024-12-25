@@ -15,7 +15,7 @@
 #include <stdbool.h>
 #include "swupdate.h"
 #include "sslapi.h"
-#include "util.h"
+#include "log.h"
 #include "swupdate_verify_private.h"
 
 static int store_verify_callback(int ok, X509_STORE_CTX *ctx) {

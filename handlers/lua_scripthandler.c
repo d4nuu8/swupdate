@@ -19,7 +19,7 @@
 #include "lua.h"
 #include "lauxlib.h"
 #include "lualib.h"
-#include "util.h"
+#include "log.h"
 #include "lua_util.h"
 
 static void lua_handler(void);

@@ -11,7 +11,7 @@
 #include <string.h>
 #include "swupdate.h"
 #include "sslapi.h"
-#include "util.h"
+#include "log.h"
 #include <wolfssl/wolfcrypt/error-crypt.h>
 #include <wolfssl/wolfcrypt/logging.h>
 

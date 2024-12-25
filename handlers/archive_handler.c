@@ -22,7 +22,7 @@
 
 #include "swupdate_image.h"
 #include "handler.h"
-#include "util.h"
+#include "log.h"
 
 #define FIFO_FILE_NAME "archivfifo"
 

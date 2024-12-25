@@ -29,7 +29,7 @@
 
 #include "bsdqueue.h"
 #include "swupdate.h"
-#include "util.h"
+#include "log.h"
 #include "handler.h"
 #ifdef CONFIG_MTD
 #include "flash.h"

@@ -23,7 +23,7 @@
 #include "lualib.h"
 #include "lua_util.h"
 #include "lua_compat.h"
-#include "util.h"
+#include "log.h"
 #include "handler.h"
 #include "bootloader.h"
 #include "progress.h"

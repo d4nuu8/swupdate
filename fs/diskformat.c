@@ -7,7 +7,10 @@
 
 #include <errno.h>
 #include <stdio.h>
-#include <util.h>
+#include <stdlib.h>
+#include <string.h>
+#include "util.h"
+#include "log.h"
 #include <handler.h>
 #include <blkid/blkid.h>
 #include <fs_interface.h>

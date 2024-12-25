@@ -16,7 +16,6 @@
 #include <cmocka.h>
 #include <network_ipc.h>
 #include <swupdate_status.h>
-#include <util.h>
 #include "pctl.h"
 #include "suricatta/suricatta.h"
 #include "../suricatta/server_hawkbit.h"

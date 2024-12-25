@@ -10,7 +10,7 @@
 #include <swupdate_dict.h>
 #include <channel_curl.h>
 #include "channel.h"
-#include <util.h>
+#include "util.h"
 
 struct json_object;
 

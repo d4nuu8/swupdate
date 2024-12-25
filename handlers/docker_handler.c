@@ -21,7 +21,7 @@
 #include <string.h>
 #include <handler.h>
 #include <pthread.h>
-#include <util.h>
+#include "log.h"
 #include <signal.h>
 #include <json-c/json.h>
 #include "parselib.h"

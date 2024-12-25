@@ -29,7 +29,7 @@
 #include "swupdate_image.h"
 #include "progress.h"
 #include "handler.h"
-#include "util.h"
+#include "log.h"
 #include "handler_helpers.h"
 #include "installer.h"
 

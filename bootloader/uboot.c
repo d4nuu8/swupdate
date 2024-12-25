@@ -17,6 +17,7 @@
 #include <dirent.h>
 #include "generated/autoconf.h"
 #include "util.h"
+#include "log.h"
 #include "dlfcn.h"
 #include "bootloader.h"
 

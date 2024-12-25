@@ -35,6 +35,7 @@
 #endif
 
 #include "util.h"
+#include "log.h"
 #include "generated/autoconf.h"
 
 /*

@@ -13,7 +13,7 @@
 #include <stdbool.h>
 #include "swupdate.h"
 #include "sslapi.h"
-#include "util.h"
+#include "log.h"
 #include "swupdate_verify_private.h"
 
 #if defined(CONFIG_CMS_SKIP_UNKNOWN_SIGNERS)

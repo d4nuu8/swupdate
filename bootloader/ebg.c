@@ -16,6 +16,7 @@
 #include <efibootguard/ebgenv.h>
 #include "generated/autoconf.h"
 #include "util.h"
+#include "log.h"
 #include "state.h"
 #include "bootloader.h"
 

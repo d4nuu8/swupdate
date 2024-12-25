@@ -23,7 +23,7 @@
 #include "generated/autoconf.h"
 #include "bsdqueue.h"
 #include "globals.h"
-#include "util.h"
+#include "log.h"
 #include "swupdate.h"
 #include "installer.h"
 #include "handler.h"

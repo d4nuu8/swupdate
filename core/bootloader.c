@@ -5,8 +5,9 @@
  * SPDX-License-Identifier:     GPL-2.0-only
  */
 #include <stdlib.h>
+#include <string.h>
 #include <errno.h>
-#include <util.h>
+#include "log.h"
 #include <bootloader.h>
 
 int   (*bootloader_env_set)(const char *, const char *);

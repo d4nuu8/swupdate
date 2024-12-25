@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <errno.h>
-#include <util.h>
+#include "log.h"
 #include <bootloader.h>
 #include <state.h>
 #include <network_ipc.h>

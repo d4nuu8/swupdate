@@ -8,7 +8,7 @@
 #pragma once
 
 #include <network_ipc.h>
-#include "util.h"
+#include "pctl.h"
 
 /* Suricatta Server Interface.
  *

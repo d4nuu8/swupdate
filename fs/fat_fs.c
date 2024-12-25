@@ -7,9 +7,11 @@
 
 #include <errno.h>
 #include <stddef.h>
+#include <stdlib.h>
+#include <strings.h>
 
 #include <fs_interface.h>
-#include <util.h>
+#include "log.h"
 
 #include "ff.h"
 

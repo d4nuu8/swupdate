@@ -17,6 +17,7 @@
 #include <dirent.h>
 #include "generated/autoconf.h"
 #include "util.h"
+#include "log.h"
 #include "pctl.h"
 #include <network_ipc.h>
 

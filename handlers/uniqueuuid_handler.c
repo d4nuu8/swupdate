@@ -23,7 +23,7 @@
 #include <sys/types.h>
 #include "swupdate_image.h"
 #include "handler.h"
-#include "util.h"
+#include "log.h"
 
 void uniqueuuid_handler(void);
 

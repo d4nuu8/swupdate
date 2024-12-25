@@ -17,7 +17,7 @@
 
 #include "handler.h"
 #include "swupdate_image.h"
-#include "util.h"
+#include "log.h"
 #include "pctl.h"
 
 static void shell_handler(void);

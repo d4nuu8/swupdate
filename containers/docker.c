@@ -15,7 +15,7 @@
 #include <errno.h>
 #include <string.h>
 #include <handler.h>
-#include <util.h>
+#include "log.h"
 #include <json-c/json.h>
 #include "parselib.h"
 #include "channel.h"

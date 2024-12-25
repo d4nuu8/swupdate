@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include "util.h"
+#include "log.h"
 #include "swupdate_dict.h"
 
 

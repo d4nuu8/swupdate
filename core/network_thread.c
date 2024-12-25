@@ -23,7 +23,7 @@
 #include <signal.h>
 
 #include "bsdqueue.h"
-#include "util.h"
+#include "log.h"
 #include "network_ipc.h"
 #include "network_interface.h"
 #include "network_utils.h"

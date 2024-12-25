@@ -21,7 +21,7 @@
 
 #include "emmc_utils.h"
 #include "emmc.h"
-#include "util.h"
+#include "log.h"
 
 /*
  * Code taken from mmc-utils, mmc_cmds.c

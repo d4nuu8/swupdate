@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
-#include <util.h>
+#include "log.h"
 #include <errno.h>
 #include <semaphore.h>
 #include <signal.h>

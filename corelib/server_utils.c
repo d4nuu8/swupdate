@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <swupdate_dict.h>
 #include <channel.h>
-#include <util.h>
+#include "log.h"
 #include <parselib.h>
 #include <swupdate_settings.h>
 #include <channel_curl.h>

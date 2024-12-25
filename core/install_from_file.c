@@ -15,7 +15,7 @@
 #include <sys/socket.h>
 #include <pthread.h>
 #include "network_ipc.h"
-#include "util.h"
+#include "log.h"
 #include "installer.h"
 
 static pthread_mutex_t install_file_mutex;

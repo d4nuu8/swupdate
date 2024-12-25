@@ -31,7 +31,7 @@
 #include "emmc_utils.h"
 #include "swupdate_image.h"
 #include "handler.h"
-#include "util.h"
+#include "log.h"
 
 void emmc_csd_handler(void);
 void emmc_csd_toggle_handler(void);

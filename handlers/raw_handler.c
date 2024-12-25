@@ -25,7 +25,7 @@
 
 #include "swupdate_image.h"
 #include "handler.h"
-#include "util.h"
+#include "log.h"
 
 void raw_image_handler(void);
 void raw_file_handler(void);

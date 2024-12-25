@@ -8,7 +8,6 @@
 #pragma once
 
 #include <stdint.h>
-#include "util.h"
 
 #define SHA_DEFAULT	"sha256"
 

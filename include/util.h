@@ -155,7 +155,6 @@ char *swupdate_strcat(int n, ...);
 char** string_split(const char* a_str, const char a_delim);
 char *substring(const char *src, int first, int len);
 char *string_tolower(char *s);
-size_t snescape(char *dst, size_t n, const char *src);
 void freeargs (char **argv);
 int compare_versions(const char* left_version, const char* right_version);
 int count_elem_list(struct imglist *list);

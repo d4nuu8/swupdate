@@ -137,6 +137,30 @@ static bool p_mkdir(const char *path)
 	return mg_fs_posix.mkd(path);
 }
 
+/* Write escaped output to sized buffer */
+static size_t snescape(char *dst, size_t n, const char *src)
+{
+	size_t len = 0;
+
+	if (n < 3)
+		return 0;
+
+	memset(dst, 0, n);
+
+	for (int i = 0; src[i] != '\0'; i++) {
+		if (src[i] == '\\' || src[i] == '\"') {
+			if (len < n - 2)
+				dst[len] = '\\';
+			len++;
+		}
+		if (len < n - 1)
+			dst[len] = src[i];
+		len++;
+	}
+
+	return len;
+}
+
 /* mg_fs which inhibits directory listing functionality */
 static struct mg_fs fs_posix_no_list = {
 		p_stat,

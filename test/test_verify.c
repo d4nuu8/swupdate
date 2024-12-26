@@ -25,8 +25,9 @@
 
 #include "sslapi.h"
 #include "swupdate.h"
+#include "swupdate_config.h"
 
-#define DATADIR "test/data/"
+#define DATADIR "./test/"
 
 static void test_verify_pkcs15(void **state)
 {

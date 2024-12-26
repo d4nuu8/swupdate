@@ -15,6 +15,7 @@
 #include "sslapi.h"
 #include "util.h"
 #include "compat.h"
+#include "swupdate_config.h"
 #include "swupdate_verify_private.h"
 
 int dgst_init(struct swupdate_digest *dgst, const EVP_MD *md)

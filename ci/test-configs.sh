@@ -10,9 +10,12 @@
 # SPDX-License-Identifier:	GPL-2.0-only
 set -eu
 
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+
 find configs -type f | while read -r fname; do
     echo "*** Testing config: $fname"
-    make "$(basename "$fname")"
-    make "-j$(nproc)"
-    make tests
+    "${REPO_ROOT}/scripts/KConfiglib/defconfig.py" "$fname"
+    meson setup .build
+    meson compile -C .build
+    meson test -C .build
 done

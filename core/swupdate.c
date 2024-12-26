@@ -52,6 +52,7 @@
 #include "versions.h"
 #include "hw-compatibility.h"
 #include "swupdate_vars.h"
+#include "swupdate_config.h"
 
 #ifdef CONFIG_SYSTEMD
 #include <systemd/sd-daemon.h>
@@ -62,20 +63,6 @@
 static pthread_t network_daemon;
 
 /* Tree derived from the configuration file */
-static struct swupdate_cfg swcfg;
-
-int loglevel = ERRORLEVEL;
-int exit_code = EXIT_SUCCESS;
-
-#ifdef CONFIG_MTD
-/* Global MTD configuration */
-static struct flash_description flashdesc;
-
-struct flash_description *get_flash_info(void) {
-	return &flashdesc;
-}
-#endif
-
 static struct option long_options[] = {
 	{"accepted-select", required_argument, NULL, 'q'},
 #ifdef CONFIG_UBIATTACH
@@ -144,7 +131,7 @@ static void usage(char *programname)
 		" -P, --preupdate                : execute pre-update command\n"
 		" -e, --select <software>,<mode> : Select software images set and source\n"
 		"                                  Ex.: stable,main\n"
-		" -g, --get-root                 : detect and print the root device and exit\n" 
+		" -g, --get-root                 : detect and print the root device and exit\n"
 		" -E, --get-emmc-boot <device>   : read the boot partition (CSD register) for a /dev/mmcblkX device\n"
 		" -q, --accepted-select\n"
 		"            <software>,<mode>   : List for software images set and source\n"
@@ -200,10 +187,6 @@ static void usage(char *programname)
 		" -w, --webserver [OPTIONS]      : Parameters to be passed to webserver\n");
 	mongoose_print_help();
 #endif
-}
-
-struct swupdate_cfg *get_swupdate_cfg(void) {
-	return &swcfg;
 }
 
 /*
@@ -477,9 +460,6 @@ int main(int argc, char **argv)
 	char **dwlav = NULL;
 	int dwlac = 0;
 
-#ifdef CONFIG_MTD
-	memset(&flashdesc, 0, sizeof(flashdesc));
-#endif
 	memset(main_options, 0, sizeof(main_options));
 	memset(image_url, 0, sizeof(image_url));
 	strcpy(main_options, "vhni:e:E:gq:l:Lcf:p:P:o:s:N:R:MmB:");

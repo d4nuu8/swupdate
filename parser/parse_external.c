@@ -13,6 +13,7 @@
 #include <errno.h>
 #include "generated/autoconf.h"
 #include "swupdate.h"
+#include "swupdate_config.h"
 #include "parsers.h"
 #include "hw-compatibility.h"
 

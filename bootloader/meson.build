@@ -4,7 +4,11 @@ dependencies = []
 
 if kconfig.has_key('CONFIG_UBOOT')
 	sources += 'uboot.c'
-	dependencies += ubootenv_dep
+
+	if kconfig.has_key('CONFIG_BOOTLOADER_STATIC_LINKED')
+		# TODO Use dependency() as soon as meson 0.63 can be used
+		dependencies += cc.find_library('ubootenv', required: true, static: true)
+	endif
 endif
 
 if kconfig.has_key('CONFIG_BOOTLOADER_NONE')
@@ -13,6 +17,7 @@ endif
 
 if kconfig.has_key('CONFIG_BOOTLOADER_GRUB')
 	sources += 'grub.c'
+	# TODO Use dependency() as soon as meson 0.62 can be used
 	dependencies += cc.find_library('dl', required: true)
 endif
 
@@ -33,6 +38,7 @@ if kconfig.has_key('CONFIG_BOOTLOADER_CBOOT')
 endif
 
 if not kconfig.has_key('CONFIG_BOOTLOADER_STATIC_LINKED')
+	# TODO Use dependency() as soon as meson 0.62 can be used
 	dependencies += cc.find_library('dl', required: true)
 endif
 

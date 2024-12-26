@@ -63,6 +63,9 @@ static char *fwenv_config = NULL;
 static char* TMPDIR = NULL;
 static char* TMPDIRSCRIPT = NULL;
 
+int loglevel = ERRORLEVEL;
+int exit_code = EXIT_SUCCESS;
+
 /*
  * Convert a hash as hexa string into a sequence of bytes
  * hash must be an array of 32 bytes as specified by SHA256

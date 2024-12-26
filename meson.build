@@ -153,4 +153,4 @@ subdir('core')
 subdir('tools')
 
 # Tests
-#subdir('test')
+subdir('test')

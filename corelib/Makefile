@@ -5,7 +5,8 @@
 lib-y				+= emmc_utils.o \
 				   multipart_parser.o \
 				   parsing_library_libjson.o \
-				   server_utils.o
+				   server_utils.o \
+				   swupdate_settings.o
 lib-$(CONFIG_DOWNLOAD)		+= downloader.o
 lib-$(CONFIG_MTD)		+= mtd-interface.o
 lib-$(CONFIG_LUA)		+= lua_interface.o lua_compat.o

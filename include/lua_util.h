@@ -52,6 +52,7 @@ static inline int lua_isinteger (lua_State *L, int index) {
 #endif
 
 #else
+#include <stddef.h>
 
 struct img_type;
 

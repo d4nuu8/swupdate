@@ -8,5 +8,6 @@
 #pragma once
 
 #include "swupdate_settings.h"
-void get_sw_versions(swupdate_cfg_handle *handle, struct swupdate_cfg *sw);
+#include "swupdate_config.h"
 
+void get_sw_versions(swupdate_cfg_handle *handle, struct swupdate_cfg *sw);

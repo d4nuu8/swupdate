@@ -3,6 +3,7 @@ sources = [
 	'multipart_parser.c',
 	'parsing_library_libjson.c',
 	'server_utils.c',
+	'swupdate_config.c',
 ]
 
 c_args = []
@@ -91,9 +92,10 @@ if kconfig.has_key('CONFIG_SSL_IMPL_WOLFSSL')
 endif
 
 if kconfig.has_key('CONFIG_SSL_IMPL_MBEDTLS')
-	dependencies += dependency('mbedcrypto', required: true)
-	dependencies += dependency('mbedtls', required: true)
-	dependencies += dependency('mbedx509', required: true)
+	# TODO Use dependency() if Mbed TLS >= 3.6.0 is commonly available
+	dependencies += cc.find_library('mbedcrypto', required: true)
+	dependencies += cc.find_library('mbedtls', required: true)
+	dependencies += cc.find_library('mbedx509', required: true)
 
 	if kconfig.has_key('CONFIG_HASH_VERIFY')
 		sources += 'verify_signature_mbedtls.c'

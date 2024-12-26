@@ -23,6 +23,7 @@
 #include "hw-compatibility.h"
 #include "parselib.h"
 #include "parsers.h"
+#include "swupdate_config.h"
 #include "swupdate_dict.h"
 #include "lua_util.h"
 

@@ -32,6 +32,7 @@
 #include "bootloader.h"
 #include "progress.h"
 #include "pctl.h"
+#include "swupdate_config.h"
 #include "swupdate_vars.h"
 #include "lua_util.h"
 
@@ -584,30 +585,30 @@ void cleanup_files(struct swupdate_cfg *software) {
 #endif
 }
 
-int preupdatecmd(struct swupdate_cfg *swcfg)
+int preupdatecmd(struct swupdate_cfg *config)
 {
-	if (swcfg) {
-		if (swcfg->parms.dry_run) {
+	if (config) {
+		if (config->parms.dry_run) {
 			DEBUG("Dry run, skipping Pre-update command");
 		} else {
 			DEBUG("Running Pre-update command");
-			return run_system_cmd(swcfg->preupdatecmd);
+			return run_system_cmd(config->preupdatecmd);
 		}
 	}
 
 	return 0;
 }
 
-int postupdate(struct swupdate_cfg *swcfg, const char *info)
+int postupdate(struct swupdate_cfg *config, const char *info)
 {
 	swupdate_progress_done(info);
 
-	if (swcfg) {
-		if (swcfg->parms.dry_run) {
+	if (config) {
+		if (config->parms.dry_run) {
 			DEBUG("Dry run, skipping Post-update command");
 		} else {
 			DEBUG("Running Post-update command");
-			return run_system_cmd(swcfg->postupdatecmd);
+			return run_system_cmd(config->postupdatecmd);
 		}
 
 	}

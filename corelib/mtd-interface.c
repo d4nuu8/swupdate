@@ -22,6 +22,13 @@
 
 static char mtd_ubi_blacklist[100] = { 0 };
 
+/* Global MTD configuration */
+static struct flash_description flashdesc = { 0 };
+
+struct flash_description *get_flash_info(void) {
+	return &flashdesc;
+}
+
 /*
  * Note: the functions here are derived directly
  * with minor changes from mtd-utils.

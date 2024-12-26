@@ -23,7 +23,16 @@ sources = [
 	'util.c',
 ]
 
-dependencies = [json_dep, ubootenv_dep]
+ubootenv_lib = cc.find_library('ubootenv', required: true)
+if kconfig.has_key('CONFIG_BOOTLOADER_STATIC_LINKED')
+	# TODO Use dependency() as soon as meson 0.63 can be used
+	ubootenv_lib = [
+		cc.find_library('ubootenv', required: true, static: true),
+		cc.find_library('yaml', required: true, static: true),
+	]
+endif
+
+dependencies = [json_dep, ubootenv_lib]
 
 if kconfig.has_key('CONFIG_GUNZIP')
 	dependencies += dependency('zlib', required: true)

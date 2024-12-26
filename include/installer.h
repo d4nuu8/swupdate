@@ -12,6 +12,7 @@
 #include "swupdate.h"
 #include "handler.h"
 #include "cpiohdr.h"
+#include "swupdate_config.h"
 
 swupdate_file_t check_if_required(struct imglist *list, struct filehdr *pfdh,
 				const char *destdir,

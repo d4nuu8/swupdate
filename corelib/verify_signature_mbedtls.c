@@ -10,6 +10,7 @@
 #include "sslapi.h"
 #include "util.h"
 #include "swupdate.h"
+#include "swupdate_config.h"
 
 static char *algo_upper(const char *algo)
 {

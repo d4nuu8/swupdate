@@ -18,12 +18,15 @@
 ## Foundation, Inc.
 
 ifneq ($(CONFIG_PKCS11),y)
-tests-$(CONFIG_ENCRYPTED_IMAGES) += test_crypt
+	tests-$(CONFIG_ENCRYPTED_IMAGES) += test_crypt
 endif
+
 tests-$(CONFIG_HASH_VERIFY) += test_hash
+
 ifeq ($(CONFIG_SIGALG_RAWRSA),y)
-tests-$(CONFIG_SIGNED_IMAGES) += test_verify
+	tests-$(CONFIG_SIGNED_IMAGES) += test_verify
 endif
+
 tests-$(CONFIG_SURICATTA_HAWKBIT) += test_json
 tests-$(CONFIG_SURICATTA_HAWKBIT) += test_server_hawkbit
 tests-y += test_util
@@ -37,8 +40,9 @@ tests-lnk  = $(addsuffix .lnk, $(TARGETS))
 targets   += $(addsuffix .o,   $(tests-y))
 
 ifneq ($(CONFIG_EXTRA_LDFLAGS),)
-EXTRA_LDFLAGS += $($(STRIP) $(subst ",,$(CONFIG_EXTRA_LDFLAGS)))#"))
+	EXTRA_LDFLAGS += $($(STRIP) $(subst ",,$(CONFIG_EXTRA_LDFLAGS)))#"))
 endif
+
 ifneq ($(CONFIG_EMBEDDED_SURICATTA_LUA),)
 ifneq ($(findstring /, $(firstword $(CONFIG_EMBEDDED_SURICATTA_LUA_SOURCE))),)
     CONFIG_EMBEDDED_SURICATTA_LUA_SOURCE := $(srctree)/$(CONFIG_EMBEDDED_SURICATTA_LUA_SOURCE)

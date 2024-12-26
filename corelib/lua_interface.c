@@ -29,6 +29,7 @@
 #include "progress.h"
 #include "swupdate_image.h"
 #include "swupdate.h"
+#include "swupdate_config.h"
 
 #define LUA_TYPE_PEMBSCR 1
 #define LUA_TYPE_HANDLER 2

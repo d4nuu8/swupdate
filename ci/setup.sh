@@ -50,6 +50,7 @@ $_SUDO apt-get -qq update && apt-get install --yes --no-install-recommends \
         libwebsockets-dev \
         libzstd-dev \
         make \
+        meson \
         npm \
         python3 \
         uuid-dev \

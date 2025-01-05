@@ -20,7 +20,13 @@ jobs:
     runs-on: ubuntu-24.04
     container: ${{ matrix.container }}
     steps:
+    - name: Install Git in container
+      run: |
+        apt-get update -qq && apt-get install --yes --no-install-recommends \
+          ca-certificates git
     - uses: actions/checkout@v4
+    - name: Workaround checkout bug
+      run: git config --global --add safe.directory "${PWD}"
     - name: Install dependencies
       run: ./ci/setup.sh
     - name: Run tests

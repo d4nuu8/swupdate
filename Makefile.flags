@@ -24,6 +24,9 @@ KBUILD_CPPFLAGS += -DVERSION_PATCHLEVEL=$(PATCHLEVEL)
 KBUILD_CPPFLAGS += -DVERSION_SUBLEVEL=$(SUBLEVEL)
 KBUILD_CPPFLAGS += -DVERSION_EXTRAVERSION=$(shell $(srctree)/scripts/gen_extraversion)
 
+# Always enable GCC diagnostic colors
+KBUILD_CFLAGS += $(call cc-option,-fdiagnostics-color=always,)
+
 KBUILD_CFLAGS += $(call cc-option,-Wall,)
 KBUILD_CFLAGS += $(call cc-option,-Wshadow,)
 KBUILD_CFLAGS += $(call cc-option,-Wwrite-strings,)

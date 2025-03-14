@@ -351,10 +351,10 @@ $(KCONFIG_CONFIG) include/config/auto.conf.cmd: ;
 # if auto.conf.cmd is missing then we are probably in a cleaned tree so
 # we execute the config step to be sure to catch updated Kconfig files
 include/config/%.conf: $(KCONFIG_CONFIG) include/config/auto.conf.cmd
-	$(Q)mkdir -p $(srctree)/include/config $(srctree)/include/generated
+	$(Q)mkdir -p $(objtree)/include/config $(objtree)/include/generated
 	$(Q)$(KCONFIGLIB)/genconfig.py \
-		--header-path $(srctree)/include/generated/autoconf.h \
-		--sync-deps $(srctree)/include/config
+		--header-path $(objtree)/include/generated/autoconf.h \
+		--sync-deps $(objtree)/include/config
 
 else
 # Dummy target needed, because used as prerequisite

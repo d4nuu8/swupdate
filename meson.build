@@ -126,7 +126,12 @@ else
 	lua_dependency = dependency('', required: false)
 endif
 
-ubootenv_dep = dependency('libubootenv', required: true, static: kconfig.has_key('CONFIG_BOOTLOADER_STATIC_LINKED'))
+ubootenv_dep = [dependency('libubootenv', required: true, static: kconfig.has_key('CONFIG_BOOTLOADER_STATIC_LINKED'))]
+if kconfig.has_key('CONFIG_BOOTLOADER_STATIC_LINKED')
+	# TODO Use dependency() as soon as meson 0.63 can be used
+	ubootenv_dep += cc.find_library('yaml', required: true, static: true)
+endif
+
 json_dep = dependency('json-c', required: true)
 curl_dep = dependency('libcurl', required: true)
 

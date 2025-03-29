@@ -7,7 +7,7 @@ if kconfig.has_key('CONFIG_UBOOT')
 
 	if kconfig.has_key('CONFIG_BOOTLOADER_STATIC_LINKED')
 		# TODO Use dependency() as soon as meson 0.63 can be used
-		dependencies += cc.find_library('ubootenv', required: true, static: true)
+		dependencies += ubootenv_dep
 	endif
 endif
 

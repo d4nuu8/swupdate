@@ -47,6 +47,7 @@ $_SUDO apt-get -qq update && apt-get install --yes --no-install-recommends \
         libsystemd-dev \
         libudev-dev \
         liburiparser-dev \
+        libyaml-dev \
         libwebsockets-dev \
         libzstd-dev \
         make \
@@ -75,7 +76,6 @@ else
             cmake \
             liblzo2-dev \
             libtool \
-            libyaml-dev \
             meson \
         && rm -rf /var/lib/apt/lists/*
     "$SCRIPT_DIR/install-src-deps.sh"

@@ -9,6 +9,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install build dependencies
 COPY ./ci/setup.sh /run/setup.sh
+COPY ./ci/install-src-deps.sh run/install-src-deps.sh
 RUN /run/setup.sh
 
 # Install runtime tooling

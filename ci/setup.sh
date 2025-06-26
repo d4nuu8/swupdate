@@ -41,6 +41,7 @@ $_SUDO apt-get -qq update && apt-get install --yes --no-install-recommends \
         libjson-c-dev \
         liblua5.2-dev \
         libluajit-5.1-dev \
+        liblzma-dev \
         libmbedtls-dev \
         librsync-dev \
         libssl-dev \
@@ -48,7 +49,6 @@ $_SUDO apt-get -qq update && apt-get install --yes --no-install-recommends \
         libudev-dev \
         liburiparser-dev \
         libwebsockets-dev \
-	liblzma-dev \
         libzstd-dev \
         make \
         npm \

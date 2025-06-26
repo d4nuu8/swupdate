@@ -314,6 +314,8 @@ swupdate.handler = {
     --- Bootloader Handler (See: `handlers/boot_handler.c`).
     ["bootloader"]     = 1,
     --- "dummy" Handler (See: `handlers/dummy_handler.c`).
+    ["crypsetup"]      = 1,
+    --- Cryptsetup Handler (See: `handlers/cryptsetup_handler.c`).
     ["dummy"]          = 1,
     --- Delta Handler (See: `handlers/delta_handler.c`).
     ["delta"]          = 1,

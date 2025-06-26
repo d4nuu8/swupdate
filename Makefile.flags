@@ -230,6 +230,10 @@ ifeq ($(CONFIG_UCFWHANDLER),y)
 LDLIBS += gpiod
 endif
 
+ifeq ($(CONFIG_CRYPTSETUP),y)
+LDLIBS += cryptsetup
+endif
+
 
 ifeq ($(CONFIG_BOOTLOADER_STATIC_LINKED),y)
 ifeq ($(CONFIG_BOOTLOADER_EBG),y)

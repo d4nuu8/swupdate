@@ -18,6 +18,10 @@ ifeq ($(HAVE_LIBCURL),)
 export HAVE_LIBCURL = y
 endif
 
+ifeq ($(HAVE_LIBCRYPTSETUP),)
+export HAVE_LIBCRYPTSETUP = y
+endif
+
 ifeq ($(HAVE_LIBFDISK),)
 export HAVE_LIBFDISK = y
 endif

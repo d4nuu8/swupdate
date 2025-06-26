@@ -33,6 +33,7 @@ $_SUDO apt-get -qq update && apt-get install --yes --no-install-recommends \
         libbtrfsutil-dev \
         libcmocka-dev \
         libconfig-dev \
+        libcryptsetup-dev \
         libcurl4-openssl-dev \
         libczmq-dev \
         libext2fs-dev \

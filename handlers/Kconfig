@@ -60,6 +60,16 @@ config CFIHAMMING1
 
 	  You do not need this if you do not have an OMAP SoC.
 
+config CRYPTSETUP
+	bool "cryptsetup"
+	depends on HAVE_LIBCRYPTSETUP
+	default n
+	help
+	  Handler to setup dm-crypt managed device-mapper mappings.
+
+comment "cryptsetup support needs libcryptsetup"
+	depends on !HAVE_LIBCRYPTSETUP
+
 config COPY
 	bool "copy"
 	default n

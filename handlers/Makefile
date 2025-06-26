@@ -30,3 +30,4 @@ obj-$(CONFIG_SWUFORWARDER_HANDLER)	+= swuforward_handler.o swuforward-ws.o
 obj-$(CONFIG_UBIVOL)			+= ubivol_handler.o
 obj-$(CONFIG_UCFWHANDLER)		+= ucfw_handler.o
 obj-$(CONFIG_DOCKER)			+= docker_handler.o
+obj-$(CONFIG_CRYPTSETUP)		+= cryptsetup_handler.o

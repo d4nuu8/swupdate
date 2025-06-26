@@ -14,7 +14,9 @@
 #include "ff.h"
 
 
-int fat_mkfs(const char *device_name, const char __attribute__ ((__unused__)) *fstype)
+int fat_mkfs(const char *device_name, const char __attribute__ ((__unused__)) *fstype,
+	     const char __attribute__ ((__unused__)) *name,
+	     const char __attribute__ ((__unused__)) *options)
 {
 	if (fatfs_init(device_name))
 		return -1;

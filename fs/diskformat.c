@@ -13,7 +13,9 @@
 #include <fs_interface.h>
 
 #if defined(CONFIG_EXT_FILESYSTEM)
-static inline int ext_mkfs_short(const char *device_name, const char *fstype)
+static inline int ext_mkfs_short(const char *device_name, const char *fstype,
+				 const char __attribute__ ((__unused__)) *name,
+				 const char __attribute__ ((__unused__)) *options)
 {
 	return ext_mkfs(device_name, fstype, 0, NULL);
 }
@@ -21,20 +23,27 @@ static inline int ext_mkfs_short(const char *device_name, const char *fstype)
 
 struct supported_filesystems {
 	const char *fstype;
-	int (*mkfs)(const char *device_name, const char *fstype);
+	int (*mkfs)(const char *device_name, const char *fstype,
+		    const char *name, const char *options);
+	int (*exists)(const char *device, const char *fstype);
 };
+
+int diskformat_fs_exists_default(const char *device, const char *fstype);
 
 static struct supported_filesystems fs[] = {
 #if defined(CONFIG_FAT_FILESYSTEM)
-	{"vfat", fat_mkfs},
+	{"vfat", fat_mkfs, diskformat_fs_exists_default},
 #endif
 #if defined(CONFIG_EXT_FILESYSTEM)
-	{"ext2", ext_mkfs_short},
-	{"ext3", ext_mkfs_short},
-	{"ext4", ext_mkfs_short},
+	{"ext2", ext_mkfs_short, diskformat_fs_exists_default},
+	{"ext3", ext_mkfs_short, diskformat_fs_exists_default},
+	{"ext4", ext_mkfs_short, diskformat_fs_exists_default},
 #endif
 #if defined(CONFIG_BTRFS_FILESYSTEM)
-	{"btrfs", btrfs_mkfs},
+	{"btrfs", btrfs_mkfs, diskformat_fs_exists_default},
+#endif
+#if defined(CONFIG_LUKS2_VOLUME)
+	{"luks2", luks2_format, luks2_exists},
 #endif
 };
 
@@ -43,7 +52,7 @@ static struct supported_filesystems fs[] = {
  * return 0 if not exists, 1 if exists, negative values on failure
  */
 
-char *diskformat_fs_detect(char *device)
+char *diskformat_fs_detect(const char *device)
 {
 	const char *value;
 	char *s = NULL;
@@ -79,7 +88,7 @@ char *diskformat_fs_detect(char *device)
 	return s;
 }
 
-bool diskformat_fs_exists(char *device, char *fstype)
+int diskformat_fs_exists_default(const char *device, const char *fstype)
 {
 	bool ret = false;
 	char *filesystem = diskformat_fs_detect(device);
@@ -92,7 +101,31 @@ bool diskformat_fs_exists(char *device, char *fstype)
 	return ret;
 }
 
-int diskformat_mkfs(char *device, char *fstype)
+int diskformat_fs_exists(const char *device, const char *fstype)
+{
+	int index;
+	int ret;
+
+	if (!device || !fstype) {
+		ERROR("Uninitialized pointer as device/fstype argument");
+		return -EINVAL;
+	}
+
+	for (index = 0; index < ARRAY_SIZE(fs); index++) {
+		if (!strcmp(fs[index].fstype, fstype))
+			break;
+	}
+	if (index >= ARRAY_SIZE(fs)) {
+		ERROR("%s file system type not supported.", fstype);
+		return -EINVAL;
+	}
+
+	ret = fs[index].exists(device, fstype);
+	TRACE("device: %s, fstype: %s, exists: %i", device, fstype, ret);
+	return ret;
+}
+
+int diskformat_mkfs(const char *device, const char *fstype, const char *name, const char *options)
 {
 	int index;
 	int ret = 0;
@@ -112,7 +145,7 @@ int diskformat_mkfs(char *device, char *fstype)
 	}
 
 	TRACE("Creating %s file system on %s", fstype, device);
-	ret = fs[index].mkfs(device, fstype);
+	ret = fs[index].mkfs(device, fstype, name, options);
 
 	if (ret) {
 		ERROR("creating %s file system on %s failed. %d",
@@ -123,7 +156,7 @@ int diskformat_mkfs(char *device, char *fstype)
 	return ret;
 }
 
-int diskformat_set_fslabel(char *device, char *fstype, const char *label)
+int diskformat_set_fslabel(const char *device, const char *fstype, const char *label)
 {
 #ifdef CONFIG_FAT_FILESYSTEM
 	if (!strcmp(fstype, "vfat")) {

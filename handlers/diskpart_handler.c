@@ -62,6 +62,7 @@ enum partfield {
 	PART_UUID,
 	PART_FLAG,
 	PART_FORCE,
+	PART_OPTIONS,
 	PART_FSLABEL
 };
 
@@ -75,6 +76,7 @@ const char *fields[] = {
 	[PART_UUID] = "partuuid",
 	[PART_FLAG] = "flag",
 	[PART_FORCE] = "force",
+	[PART_OPTIONS] = "options",
 	[PART_FSLABEL] = "fslabel"
 };
 
@@ -91,6 +93,7 @@ struct partition_data {
 	int explicit_size;
 	unsigned long flags;
 	int force;
+	char options[SWUPDATE_GENERAL_STRING_SIZE];
 	LIST_ENTRY(partition_data) next;
 };
 LIST_HEAD(listparts, partition_data);
@@ -1196,7 +1199,7 @@ static int format_parts(struct hnd_priv priv, struct img_type *img, struct creat
 		}
 
 		if (do_mkfs) {
-			ret = diskformat_mkfs(device, part->fstype);
+			ret = diskformat_mkfs(device, part->fstype, part->name, part->options);
 		} else {
 			TRACE("Skipping mkfs on %s", device);
 		}
@@ -1341,6 +1344,9 @@ static int diskpart(struct img_type *img,
 					case PART_FORCE:
 						part->force = strtobool(equal);
 						TRACE("Force flag explicitly mentioned, value %d", part->force);
+						break;
+					case PART_OPTIONS:
+						strncpy(part->options, equal, sizeof(part->options));
 						break;
 					case PART_FSLABEL:
 #ifdef CONFIG_DISKPART_FORMAT

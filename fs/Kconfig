@@ -40,4 +40,11 @@ config BTRFS_FILESYSTEM_USELIBMKFS
 comment "BTRFS file system creation support needs libbtrfs libbtrfsutil"
 	depends on !HAVE_LIBBTRFS
 
+config LUKS2_VOLUME
+	bool "LUKS2 volume creation support"
+	default n
+	help
+	  Enable support for creating LUKS2 volumes.
+	  This requires cryptsetup to be available on the target.
+
 endif

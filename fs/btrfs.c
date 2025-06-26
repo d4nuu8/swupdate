@@ -25,7 +25,9 @@
 #include "pctl.h"
 
 extern int mkfs_main(int argc, const char **argv);
-int btrfs_mkfs(const char *device_name, const char __attribute__ ((__unused__)) *fstype)
+int btrfs_mkfs(const char *device_name, const char __attribute__ ((__unused__)) *fstype,
+	       const char __attribute__ ((__unused__)) *name,
+	       const char __attribute__ ((__unused__)) *options)
 {
 	int fd, ret;
 	const char *argv[3] = { "mkfs.btrfs", "-f", NULL };

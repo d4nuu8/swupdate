@@ -35,6 +35,10 @@ static int diskformat(struct img_type *img,
 
 	char *force = dict_get_value(&img->properties, "force");
 
+	char *options = dict_get_value(&img->properties, "options");
+
+	char *name = dict_get_value(&img->properties, "name");
+
 	/* create filesystem by default */
 	bool do_mkfs = true;
 	if (force == NULL || !strtobool(force)) {
@@ -43,7 +47,7 @@ static int diskformat(struct img_type *img,
 	}
 
 	if (do_mkfs) {
-		ret = diskformat_mkfs(img->device, fstype);
+		ret = diskformat_mkfs(img->device, fstype, name, options);
 	} else {
 		TRACE("Skipping mkfs on %s", img->device);
 	}
